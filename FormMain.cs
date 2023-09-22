@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Text;
 using Path = System.IO.Path;
 using ImageMagick;
 using System.Diagnostics;
-using System.Security.Cryptography.Xml;
 
 namespace monkey_image
 {
@@ -20,7 +10,35 @@ namespace monkey_image
         public FormMain()
         {
             InitializeComponent();
+            SetDefaultAttrComponent();
             InitializeTypeMap();
+        }
+
+        public enum CornType
+        {
+            TopLeft,        //顶部左边
+            TopCenter,      //顶部中间
+            TopRight,       //顶部右边
+            BottomLeft,     //底部左边
+            BottomCenter,   //底部中间
+            BottomRight     //底部右边
+        }
+
+        // 设置组件的默认属性
+        private void SetDefaultAttrComponent()
+        {
+            comboBoxCorner.SelectedIndex = 3; //底部左边
+            font = new Font("Arial", 80, FontStyle.Bold);
+            textBoxFont.Text = font.ToString();
+        }
+
+        private void InitializeTypeMap()
+        {
+            typeMap = new Dictionary<string, HandleImage>(){
+                {".jpg", handleJpg},
+                {".jpeg", handleJpg},
+                {".heic", handleHeic}
+            };
         }
 
         private void buttonOpen_Click(object sender, EventArgs e)
@@ -33,33 +51,43 @@ namespace monkey_image
                     textBoxDir.Text = Path.GetDirectoryName(filePaths[0]);
                 }
             }
-            else
-            {
-                filePaths = null;
-                textBoxDir.Text = null;
-            }
         }
-
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            if (filePaths.Length == 0)
+            if (filePaths == null || filePaths.Length == 0)
             {
                 return;
             }
             Debug.WriteLine("processing start");
+            buttonStart.Enabled = false;
+            toolStripProgressBar.Minimum = 0;
+            toolStripProgressBar.Maximum = filePaths.Length;
+            toolStripProgressBar.Value = 0;
+            toolStripProgressBar.Step = 1;
             foreach (var one in filePaths)
             {
                 // TODO 使用协程池
                 var res = handleImageEntry(one);
                 if (res == false)
                 {
-                    Debug.WriteLine("processing {0} failed", one);
+                    Debug.WriteLine("processing failed", one);
                 }
+                toolStripProgressBar.PerformStep();
             }
+            buttonStart.Enabled = true;
 
             Debug.WriteLine("processing end");
         }
+        private void buttonFont_Click(object sender, EventArgs e)
+        {
+            if (fontDialog.ShowDialog() == DialogResult.OK)
+            {
+                font = fontDialog.Font;
+                textBoxFont.Text = font.ToString();
+            }
+        }
+
 
         // 处理图片入口
         private bool handleImageEntry(string file)
@@ -76,63 +104,53 @@ namespace monkey_image
             return true;
         }
 
-        private void InitializeTypeMap()
-        {
-            typeMap = new Dictionary<string, HandleImage>(){
-                {".jpg", handleJpg},
-                {".jpeg", handleJpg},
-                {".heic", handleHeic}
-            };
-        }
-
         private bool handleJpg(string file)
         {
             string datetime = DateTime.Now.ToString("yyyy/MM/dd");
 
             Debug.WriteLine("handleJpg");
-            Bitmap fileBitMap = new Bitmap(file);
+            using Bitmap fileBitMap = new Bitmap(file);
             var prop = fileBitMap.GetPropertyItem(0x9003);
-            if (prop != null) {
+            if (prop != null)
+            {
                 datetime = Encoding.Default.GetString(prop.Value).Trim('\0');
                 Debug.WriteLine("{0} datetime: {1}", file, datetime);
                 datetime = datetime.Split(' ')[0].Replace(':', '/');
             }
-
-            // 设置字体和颜色
-            Font font = new Font("Arial", 80, FontStyle.Bold);
-            SolidBrush brush = new SolidBrush(Color.Yellow);
+            var text = getFrontCaption() + datetime + getBackCaption();
+            Debug.WriteLine("{0} text: {1}", file, text);
 
             // 获取图像宽度和高度
             int width = fileBitMap.Width;
             int height = fileBitMap.Height;
-
-            // 计算元数据区域的宽度和高度
-            int metaWidth = width / 2;
-            int metaHeight = height / 10;
+            Size size = TextRenderer.MeasureText(text, font);
+            int childWidth = size.Width;
+            int childHeight = size.Height;
+            Debug.WriteLine("MeasureText size: {0},{1}", size.Width, size.Height);
+            Point point = calcCoordinate(width, height, childWidth, childHeight);
 
             // 创建元数据区域
-            Bitmap metaBitmap = new Bitmap(metaWidth, metaHeight);
+            using Bitmap metaBitmap = new Bitmap(childWidth, childHeight);
+
+            // 设置字体和颜色
+            SolidBrush brush = new SolidBrush(Color.Yellow);
 
             // 在元数据区域中绘制文本框
-            Graphics metaGraph = Graphics.FromImage(metaBitmap);
+            using Graphics metaGraph = Graphics.FromImage(metaBitmap);
             metaGraph.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             metaGraph.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            metaGraph.DrawString(datetime, font, brush, new Rectangle(0, 0, metaWidth, metaHeight));
+            metaGraph.DrawString(text, font, brush, new Rectangle(0, 0, childWidth, childHeight));
 
             // 将元数据区域合并到主图像上
-            Graphics fileGraph = Graphics.FromImage(fileBitMap);
-            fileGraph.DrawImage(metaBitmap, new Rectangle(width/16, (int)(height *0.95), metaWidth, metaHeight));
+            using Graphics fileGraph = Graphics.FromImage(fileBitMap);
+            fileGraph.DrawImage(metaBitmap, new Rectangle(point.X, point.Y, childWidth, childHeight));
 
             // 保存修改后的图像到磁盘
-            string outputPath = Path.Combine(Path.GetDirectoryName(file), "Output_" + Path.GetFileNameWithoutExtension(file) + ".jpg");
+            string outputFile = "Output_" + Path.GetFileNameWithoutExtension(file) + ".jpg";
+            string outputPath = Path.Combine(Path.GetDirectoryName(file), outputFile);
             fileBitMap.Save(outputPath);
 
-            metaGraph.Dispose();
-            fileGraph.Dispose();
-            metaBitmap.Dispose();
-            fileBitMap.Dispose();
-
-            Debug.WriteLine("handle {0} end", file);
+            Debug.WriteLine("handle end", file);
             return true;
         }
 
@@ -142,7 +160,7 @@ namespace monkey_image
 
             Debug.WriteLine("handleHeic");
             using MagickImage inputImage = new MagickImage(file);
-            if (inputImage == null) 
+            if (inputImage == null)
             {
                 Debug.WriteLine("open file failed:{0}", file);
                 return false;
@@ -161,26 +179,39 @@ namespace monkey_image
                     datetime = str.Split(' ')[0].Replace(':', '/');
                 }
             }
-            var settings = new MagickReadSettings
-            {
-                Font = "Arial",
-                FontPointsize = 84,
-                FontStyle = FontStyleType.Bold,
-                FillColor = MagickColors.Yellow,
-                TextGravity = Gravity.West,
-                BackgroundColor = MagickColors.Transparent,
-                Width = width * 8 / 10, 
-                Height = height * 1 / 20
-            };
             var text = getFrontCaption() + datetime + getBackCaption();
-            using var caption = new MagickImage($"label:{text}", settings);
-            // Add the caption layer on top of the background image
-            inputImage.Composite(caption, width * 1 / 24, height * 19 / 20, CompositeOperator.Over);
-            // Save to the new file
-            string outputPath = Path.Combine(Path.GetDirectoryName(file), "Output_" + Path.GetFileNameWithoutExtension(file)+".jpg");
-            inputImage.Write(outputPath);
+            Debug.WriteLine("{0} text: {1}", file, text);
 
-            Debug.WriteLine("handle {0} end", file);
+            Size size = TextRenderer.MeasureText(text, font);
+            int childWidth = size.Width;
+            int childHeight = size.Height;
+            Debug.WriteLine("MeasureText size: {0},{1}", size.Width, size.Height);
+
+            Point point = calcCoordinate(width, height, childWidth, childHeight);
+            var styleMap = new Dictionary<FontStyle, FontStyleType>()
+            {
+                [FontStyle.Regular] = FontStyleType.Normal,
+                [FontStyle.Bold] = FontStyleType.Bold,
+                [FontStyle.Italic] = FontStyleType.Italic,
+                [FontStyle.Underline] = FontStyleType.Normal,
+                [FontStyle.Strikeout] = FontStyleType.Normal,
+            };
+
+            inputImage.Settings.FontFamily = font.FontFamily.ToString();
+            inputImage.Settings.Font = font.Name;
+            inputImage.Settings.FontPointsize = font.Size;
+            inputImage.Settings.FontStyle = styleMap[font.Style];
+            inputImage.Settings.FillColor = MagickColors.Yellow;
+            inputImage.Settings.AntiAlias = true;
+            var geo = new MagickGeometry(point.X, point.Y, 0, 0);
+            inputImage.Annotate(text, geo);
+
+            // Save to the new file
+            string outputFile = "Output_" + Path.GetFileNameWithoutExtension(file) + ".jpg";
+            string outputPath = Path.Combine(Path.GetDirectoryName(file), outputFile);
+            inputImage.Quality = 75;
+            inputImage.Write(outputPath);
+            Debug.WriteLine("{0}:handle end, output:{1}", file, outputPath);
             return true;
         }
 
@@ -196,9 +227,75 @@ namespace monkey_image
             return textBoxBack.Text;
         }
 
+        // 获取文本放置角落
+        private CornType getCornType()
+        {
+            return (CornType)comboBoxCorner.SelectedIndex;
+        }
 
-        private string[] filePaths;
-        private Dictionary<string, HandleImage> typeMap;
+        // 计算子元素的坐标
+        private Point calcCoordinate(int width, int height, int childWidth, int childHeight)
+        {
+            Point p = new Point();
+            int x = 0;
+            int y = 0;
+
+            switch (getCornType())
+            {
+                case CornType.TopLeft:
+                    x = width * 1 / 24;
+                    y = height * 1 / 32;
+                    break;
+
+                case CornType.TopCenter:
+                    x = (width - childWidth) / 2;
+                    y = height * 1 / 32;
+                    break;
+
+                case CornType.TopRight:
+                    x = width - childWidth - width * 1 / 24;
+                    y = height * 1 / 32;
+                    break;
+
+                case CornType.BottomLeft:
+                    x = width * 1 / 24;
+                    y = height * 31 / 32;
+                    break;
+
+                case CornType.BottomCenter:
+                    x = (width - childWidth) / 2;
+                    y = height * 31 / 32;
+                    break;
+
+                case CornType.BottomRight:
+                    x = width - childWidth - width * 1 / 24;
+                    y = height * 31 / 32;
+                    break;
+
+                default:
+                    x = width * 1 / 24;
+                    y = height * 31 / 32;
+                    break;
+            }
+
+            p.X = x;
+            p.Y = y;
+            return p;
+        }
+
+        // 打印字节码
+        private void printEncode(string s)
+        {
+            byte[] bytes = Encoding.Default.GetBytes(s);
+            Debug.WriteLine(BitConverter.ToString(bytes));
+        }
+
+
+        private string[]? filePaths;
+        private Dictionary<string, HandleImage>? typeMap;
+        private Font font;
+
+
     }
     delegate bool HandleImage(string file);
 }

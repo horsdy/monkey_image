@@ -28,296 +28,237 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBoxDir = new System.Windows.Forms.TextBox();
-            this.buttonOpen = new System.Windows.Forms.Button();
-            this.groupBoxText = new System.Windows.Forms.GroupBox();
-            this.textBoxBack = new System.Windows.Forms.TextBox();
-            this.textBoxMid = new System.Windows.Forms.TextBox();
-            this.textBoxFront = new System.Windows.Forms.TextBox();
-            this.groupBoxPlace = new System.Windows.Forms.GroupBox();
-            this.textBoxVMargin = new System.Windows.Forms.TextBox();
-            this.labelVMargin = new System.Windows.Forms.Label();
-            this.textBoxHMargin = new System.Windows.Forms.TextBox();
-            this.labelHMargin = new System.Windows.Forms.Label();
-            this.comboBoxCorner = new System.Windows.Forms.ComboBox();
-            this.labelCorner = new System.Windows.Forms.Label();
-            this.buttonFont = new System.Windows.Forms.Button();
-            this.textBoxFont = new System.Windows.Forms.TextBox();
-            this.groupBoxFont = new System.Windows.Forms.GroupBox();
-            this.groupBoxConvert = new System.Windows.Forms.GroupBox();
-            this.checkBoxJpg = new System.Windows.Forms.CheckBox();
-            this.statusStripBottom = new System.Windows.Forms.StatusStrip();
-            this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.buttonStart = new System.Windows.Forms.Button();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.fontDialog = new System.Windows.Forms.FontDialog();
-            this.groupBoxText.SuspendLayout();
-            this.groupBoxPlace.SuspendLayout();
-            this.groupBoxFont.SuspendLayout();
-            this.groupBoxConvert.SuspendLayout();
-            this.statusStripBottom.SuspendLayout();
-            this.SuspendLayout();
+            textBoxDir = new TextBox();
+            buttonOpen = new Button();
+            groupBoxText = new GroupBox();
+            textBoxBack = new TextBox();
+            textBoxMid = new TextBox();
+            textBoxFront = new TextBox();
+            groupBoxPlace = new GroupBox();
+            comboBoxCorner = new ComboBox();
+            labelCorner = new Label();
+            buttonFont = new Button();
+            textBoxFont = new TextBox();
+            groupBoxFont = new GroupBox();
+            checkBoxJpg = new CheckBox();
+            statusStripBottom = new StatusStrip();
+            toolStripProgressBar = new ToolStripProgressBar();
+            buttonStart = new Button();
+            openFileDialog = new OpenFileDialog();
+            fontDialog = new FontDialog();
+            groupBoxText.SuspendLayout();
+            groupBoxPlace.SuspendLayout();
+            groupBoxFont.SuspendLayout();
+            statusStripBottom.SuspendLayout();
+            SuspendLayout();
             // 
             // textBoxDir
             // 
-            this.textBoxDir.Location = new System.Drawing.Point(12, 12);
-            this.textBoxDir.Name = "textBoxDir";
-            this.textBoxDir.Size = new System.Drawing.Size(393, 23);
-            this.textBoxDir.TabIndex = 0;
+            textBoxDir.Location = new Point(12, 12);
+            textBoxDir.Name = "textBoxDir";
+            textBoxDir.Size = new Size(393, 23);
+            textBoxDir.TabIndex = 0;
             // 
             // buttonOpen
             // 
-            this.buttonOpen.Location = new System.Drawing.Point(411, 12);
-            this.buttonOpen.Name = "buttonOpen";
-            this.buttonOpen.Size = new System.Drawing.Size(75, 23);
-            this.buttonOpen.TabIndex = 1;
-            this.buttonOpen.Text = "打开";
-            this.buttonOpen.UseVisualStyleBackColor = true;
-            this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
+            buttonOpen.Location = new Point(411, 12);
+            buttonOpen.Name = "buttonOpen";
+            buttonOpen.Size = new Size(75, 23);
+            buttonOpen.TabIndex = 1;
+            buttonOpen.Text = "打开";
+            buttonOpen.UseVisualStyleBackColor = true;
+            buttonOpen.Click += buttonOpen_Click;
             // 
             // groupBoxText
             // 
-            this.groupBoxText.Controls.Add(this.textBoxBack);
-            this.groupBoxText.Controls.Add(this.textBoxMid);
-            this.groupBoxText.Controls.Add(this.textBoxFront);
-            this.groupBoxText.Location = new System.Drawing.Point(13, 42);
-            this.groupBoxText.Name = "groupBoxText";
-            this.groupBoxText.Size = new System.Drawing.Size(473, 62);
-            this.groupBoxText.TabIndex = 2;
-            this.groupBoxText.TabStop = false;
-            this.groupBoxText.Text = "文本";
+            groupBoxText.Controls.Add(textBoxBack);
+            groupBoxText.Controls.Add(textBoxMid);
+            groupBoxText.Controls.Add(textBoxFront);
+            groupBoxText.Location = new Point(13, 42);
+            groupBoxText.Name = "groupBoxText";
+            groupBoxText.Size = new Size(473, 62);
+            groupBoxText.TabIndex = 2;
+            groupBoxText.TabStop = false;
+            groupBoxText.Text = "文本";
             // 
             // textBoxBack
             // 
-            this.textBoxBack.Location = new System.Drawing.Point(315, 23);
-            this.textBoxBack.Name = "textBoxBack";
-            this.textBoxBack.Size = new System.Drawing.Size(151, 23);
-            this.textBoxBack.TabIndex = 2;
+            textBoxBack.Location = new Point(315, 23);
+            textBoxBack.Name = "textBoxBack";
+            textBoxBack.Size = new Size(151, 23);
+            textBoxBack.TabIndex = 2;
             // 
             // textBoxMid
             // 
-            this.textBoxMid.Location = new System.Drawing.Point(161, 23);
-            this.textBoxMid.Name = "textBoxMid";
-            this.textBoxMid.ReadOnly = true;
-            this.textBoxMid.Size = new System.Drawing.Size(143, 23);
-            this.textBoxMid.TabIndex = 1;
-            this.textBoxMid.Text = "日期";
-            this.textBoxMid.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            textBoxMid.Location = new Point(161, 23);
+            textBoxMid.Name = "textBoxMid";
+            textBoxMid.ReadOnly = true;
+            textBoxMid.Size = new Size(143, 23);
+            textBoxMid.TabIndex = 1;
+            textBoxMid.Text = "日期";
+            textBoxMid.TextAlign = HorizontalAlignment.Center;
             // 
             // textBoxFront
             // 
-            this.textBoxFront.Location = new System.Drawing.Point(7, 23);
-            this.textBoxFront.Name = "textBoxFront";
-            this.textBoxFront.Size = new System.Drawing.Size(143, 23);
-            this.textBoxFront.TabIndex = 0;
+            textBoxFront.Location = new Point(7, 23);
+            textBoxFront.Name = "textBoxFront";
+            textBoxFront.Size = new Size(143, 23);
+            textBoxFront.TabIndex = 0;
             // 
             // groupBoxPlace
             // 
-            this.groupBoxPlace.Controls.Add(this.textBoxVMargin);
-            this.groupBoxPlace.Controls.Add(this.labelVMargin);
-            this.groupBoxPlace.Controls.Add(this.textBoxHMargin);
-            this.groupBoxPlace.Controls.Add(this.labelHMargin);
-            this.groupBoxPlace.Controls.Add(this.comboBoxCorner);
-            this.groupBoxPlace.Controls.Add(this.labelCorner);
-            this.groupBoxPlace.Location = new System.Drawing.Point(13, 111);
-            this.groupBoxPlace.Name = "groupBoxPlace";
-            this.groupBoxPlace.Size = new System.Drawing.Size(226, 129);
-            this.groupBoxPlace.TabIndex = 3;
-            this.groupBoxPlace.TabStop = false;
-            this.groupBoxPlace.Text = "位置";
-            // 
-            // textBoxVMargin
-            // 
-            this.textBoxVMargin.Location = new System.Drawing.Point(118, 94);
-            this.textBoxVMargin.Name = "textBoxVMargin";
-            this.textBoxVMargin.Size = new System.Drawing.Size(100, 23);
-            this.textBoxVMargin.TabIndex = 5;
-            // 
-            // labelVMargin
-            // 
-            this.labelVMargin.AutoSize = true;
-            this.labelVMargin.Location = new System.Drawing.Point(8, 97);
-            this.labelVMargin.Name = "labelVMargin";
-            this.labelVMargin.Size = new System.Drawing.Size(116, 17);
-            this.labelVMargin.TabIndex = 4;
-            this.labelVMargin.Text = "离上下边界的距离：";
-            // 
-            // textBoxHMargin
-            // 
-            this.textBoxHMargin.Location = new System.Drawing.Point(118, 61);
-            this.textBoxHMargin.Name = "textBoxHMargin";
-            this.textBoxHMargin.Size = new System.Drawing.Size(100, 23);
-            this.textBoxHMargin.TabIndex = 3;
-            // 
-            // labelHMargin
-            // 
-            this.labelHMargin.AutoSize = true;
-            this.labelHMargin.Location = new System.Drawing.Point(8, 64);
-            this.labelHMargin.Name = "labelHMargin";
-            this.labelHMargin.Size = new System.Drawing.Size(116, 17);
-            this.labelHMargin.TabIndex = 2;
-            this.labelHMargin.Text = "离左右边界的距离：";
+            groupBoxPlace.Controls.Add(comboBoxCorner);
+            groupBoxPlace.Controls.Add(labelCorner);
+            groupBoxPlace.Location = new Point(13, 111);
+            groupBoxPlace.Name = "groupBoxPlace";
+            groupBoxPlace.Size = new Size(226, 129);
+            groupBoxPlace.TabIndex = 3;
+            groupBoxPlace.TabStop = false;
+            groupBoxPlace.Text = "位置";
             // 
             // comboBoxCorner
             // 
-            this.comboBoxCorner.DisplayMember = "右下角";
-            this.comboBoxCorner.FormattingEnabled = true;
-            this.comboBoxCorner.Items.AddRange(new object[] {
-            "右下角"});
-            this.comboBoxCorner.Location = new System.Drawing.Point(118, 23);
-            this.comboBoxCorner.Name = "comboBoxCorner";
-            this.comboBoxCorner.Size = new System.Drawing.Size(100, 25);
-            this.comboBoxCorner.TabIndex = 1;
-            this.comboBoxCorner.ValueMember = "右下角";
+            comboBoxCorner.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxCorner.FormattingEnabled = true;
+            comboBoxCorner.Items.AddRange(new object[] { "顶部左边", "顶部中间", "顶部右边", "底部左边", "底部中间", "底部右边" });
+            comboBoxCorner.Location = new Point(52, 25);
+            comboBoxCorner.Name = "comboBoxCorner";
+            comboBoxCorner.Size = new Size(100, 25);
+            comboBoxCorner.TabIndex = 1;
             // 
             // labelCorner
             // 
-            this.labelCorner.AutoSize = true;
-            this.labelCorner.Location = new System.Drawing.Point(73, 31);
-            this.labelCorner.Name = "labelCorner";
-            this.labelCorner.Size = new System.Drawing.Size(39, 17);
-            this.labelCorner.TabIndex = 0;
-            this.labelCorner.Text = "方位 :";
+            labelCorner.AutoSize = true;
+            labelCorner.Location = new Point(7, 31);
+            labelCorner.Name = "labelCorner";
+            labelCorner.Size = new Size(39, 17);
+            labelCorner.TabIndex = 0;
+            labelCorner.Text = "方位 :";
             // 
             // buttonFont
             // 
-            this.buttonFont.Location = new System.Drawing.Point(15, 25);
-            this.buttonFont.Name = "buttonFont";
-            this.buttonFont.Size = new System.Drawing.Size(75, 23);
-            this.buttonFont.TabIndex = 6;
-            this.buttonFont.Text = "选择字体";
-            this.buttonFont.UseVisualStyleBackColor = true;
+            buttonFont.Location = new Point(15, 25);
+            buttonFont.Name = "buttonFont";
+            buttonFont.Size = new Size(75, 23);
+            buttonFont.TabIndex = 6;
+            buttonFont.Text = "选择字体";
+            buttonFont.UseVisualStyleBackColor = true;
+            buttonFont.Click += buttonFont_Click;
             // 
             // textBoxFont
             // 
-            this.textBoxFont.Location = new System.Drawing.Point(15, 54);
-            this.textBoxFont.Multiline = true;
-            this.textBoxFont.Name = "textBoxFont";
-            this.textBoxFont.ReadOnly = true;
-            this.textBoxFont.Size = new System.Drawing.Size(216, 63);
-            this.textBoxFont.TabIndex = 7;
+            textBoxFont.Location = new Point(15, 54);
+            textBoxFont.Multiline = true;
+            textBoxFont.Name = "textBoxFont";
+            textBoxFont.ReadOnly = true;
+            textBoxFont.Size = new Size(216, 63);
+            textBoxFont.TabIndex = 7;
             // 
             // groupBoxFont
             // 
-            this.groupBoxFont.Controls.Add(this.buttonFont);
-            this.groupBoxFont.Controls.Add(this.textBoxFont);
-            this.groupBoxFont.Location = new System.Drawing.Point(245, 111);
-            this.groupBoxFont.Name = "groupBoxFont";
-            this.groupBoxFont.Size = new System.Drawing.Size(241, 129);
-            this.groupBoxFont.TabIndex = 8;
-            this.groupBoxFont.TabStop = false;
-            this.groupBoxFont.Text = "字体";
-            // 
-            // groupBoxConvert
-            // 
-            this.groupBoxConvert.Controls.Add(this.checkBoxJpg);
-            this.groupBoxConvert.Location = new System.Drawing.Point(13, 247);
-            this.groupBoxConvert.Name = "groupBoxConvert";
-            this.groupBoxConvert.Size = new System.Drawing.Size(226, 100);
-            this.groupBoxConvert.TabIndex = 9;
-            this.groupBoxConvert.TabStop = false;
-            this.groupBoxConvert.Text = "转换";
+            groupBoxFont.Controls.Add(buttonFont);
+            groupBoxFont.Controls.Add(textBoxFont);
+            groupBoxFont.Location = new Point(245, 111);
+            groupBoxFont.Name = "groupBoxFont";
+            groupBoxFont.Size = new Size(241, 129);
+            groupBoxFont.TabIndex = 8;
+            groupBoxFont.TabStop = false;
+            groupBoxFont.Text = "字体";
             // 
             // checkBoxJpg
             // 
-            this.checkBoxJpg.AutoSize = true;
-            this.checkBoxJpg.Location = new System.Drawing.Point(7, 23);
-            this.checkBoxJpg.Name = "checkBoxJpg";
-            this.checkBoxJpg.Size = new System.Drawing.Size(70, 21);
-            this.checkBoxJpg.TabIndex = 0;
-            this.checkBoxJpg.Text = "转为jpg";
-            this.checkBoxJpg.UseVisualStyleBackColor = true;
+            checkBoxJpg.AutoSize = true;
+            checkBoxJpg.Checked = true;
+            checkBoxJpg.CheckState = CheckState.Checked;
+            checkBoxJpg.Enabled = false;
+            checkBoxJpg.Location = new Point(13, 246);
+            checkBoxJpg.Name = "checkBoxJpg";
+            checkBoxJpg.Size = new Size(70, 21);
+            checkBoxJpg.TabIndex = 0;
+            checkBoxJpg.Text = "转为jpg";
+            checkBoxJpg.UseVisualStyleBackColor = true;
             // 
             // statusStripBottom
             // 
-            this.statusStripBottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripProgressBar});
-            this.statusStripBottom.Location = new System.Drawing.Point(0, 391);
-            this.statusStripBottom.Name = "statusStripBottom";
-            this.statusStripBottom.Size = new System.Drawing.Size(498, 22);
-            this.statusStripBottom.SizingGrip = false;
-            this.statusStripBottom.TabIndex = 10;
-            this.statusStripBottom.Text = "statusStrip";
+            statusStripBottom.Items.AddRange(new ToolStripItem[] { toolStripProgressBar });
+            statusStripBottom.Location = new Point(0, 295);
+            statusStripBottom.Name = "statusStripBottom";
+            statusStripBottom.Size = new Size(498, 22);
+            statusStripBottom.SizingGrip = false;
+            statusStripBottom.TabIndex = 10;
+            statusStripBottom.Text = "statusStrip";
             // 
             // toolStripProgressBar
             // 
-            this.toolStripProgressBar.Name = "toolStripProgressBar";
-            this.toolStripProgressBar.Size = new System.Drawing.Size(494, 16);
+            toolStripProgressBar.Name = "toolStripProgressBar";
+            toolStripProgressBar.Size = new Size(494, 16);
             // 
             // buttonStart
             // 
-            this.buttonStart.Location = new System.Drawing.Point(410, 359);
-            this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(75, 23);
-            this.buttonStart.TabIndex = 11;
-            this.buttonStart.Text = "开始";
-            this.buttonStart.UseVisualStyleBackColor = true;
-            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            buttonStart.Location = new Point(411, 267);
+            buttonStart.Name = "buttonStart";
+            buttonStart.Size = new Size(75, 23);
+            buttonStart.TabIndex = 11;
+            buttonStart.Text = "开始";
+            buttonStart.UseVisualStyleBackColor = true;
+            buttonStart.Click += buttonStart_Click;
             // 
             // openFileDialog
             // 
-            this.openFileDialog.Filter = "图片|*.heic;*.jpg;*.jpeg;";
-            this.openFileDialog.Multiselect = true;
+            openFileDialog.Filter = "图片|*.heic;*.jpg;*.jpeg;";
+            openFileDialog.Multiselect = true;
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(498, 413);
-            this.Controls.Add(this.buttonStart);
-            this.Controls.Add(this.statusStripBottom);
-            this.Controls.Add(this.groupBoxConvert);
-            this.Controls.Add(this.groupBoxFont);
-            this.Controls.Add(this.groupBoxPlace);
-            this.Controls.Add(this.groupBoxText);
-            this.Controls.Add(this.buttonOpen);
-            this.Controls.Add(this.textBoxDir);
-            this.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.MaximizeBox = false;
-            this.Name = "FormMain";
-            this.Text = "MonkeyImage v1.0";
-            this.groupBoxText.ResumeLayout(false);
-            this.groupBoxText.PerformLayout();
-            this.groupBoxPlace.ResumeLayout(false);
-            this.groupBoxPlace.PerformLayout();
-            this.groupBoxFont.ResumeLayout(false);
-            this.groupBoxFont.PerformLayout();
-            this.groupBoxConvert.ResumeLayout(false);
-            this.groupBoxConvert.PerformLayout();
-            this.statusStripBottom.ResumeLayout(false);
-            this.statusStripBottom.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(498, 317);
+            Controls.Add(checkBoxJpg);
+            Controls.Add(buttonStart);
+            Controls.Add(statusStripBottom);
+            Controls.Add(groupBoxFont);
+            Controls.Add(groupBoxPlace);
+            Controls.Add(groupBoxText);
+            Controls.Add(buttonOpen);
+            Controls.Add(textBoxDir);
+            Font = new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            FormBorderStyle = FormBorderStyle.Fixed3D;
+            Margin = new Padding(3, 4, 3, 4);
+            MaximizeBox = false;
+            Name = "FormMain";
+            Text = "MonkeyImage v1.0";
+            groupBoxText.ResumeLayout(false);
+            groupBoxText.PerformLayout();
+            groupBoxPlace.ResumeLayout(false);
+            groupBoxPlace.PerformLayout();
+            groupBoxFont.ResumeLayout(false);
+            groupBoxFont.PerformLayout();
+            statusStripBottom.ResumeLayout(false);
+            statusStripBottom.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBoxDir;
-        private System.Windows.Forms.Button buttonOpen;
-        private System.Windows.Forms.GroupBox groupBoxText;
-        private System.Windows.Forms.TextBox textBoxBack;
-        private System.Windows.Forms.TextBox textBoxMid;
-        private System.Windows.Forms.TextBox textBoxFront;
-        private System.Windows.Forms.GroupBox groupBoxPlace;
-        private System.Windows.Forms.ComboBox comboBoxCorner;
-        private System.Windows.Forms.Label labelCorner;
-        private System.Windows.Forms.TextBox textBoxVMargin;
-        private System.Windows.Forms.Label labelVMargin;
-        private System.Windows.Forms.TextBox textBoxHMargin;
-        private System.Windows.Forms.Label labelHMargin;
-        private System.Windows.Forms.Button buttonFont;
-        private System.Windows.Forms.TextBox textBoxFont;
-        private System.Windows.Forms.GroupBox groupBoxFont;
-        private System.Windows.Forms.GroupBox groupBoxConvert;
-        private System.Windows.Forms.CheckBox checkBoxJpg;
-        private System.Windows.Forms.StatusStrip statusStripBottom;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
-        private System.Windows.Forms.Button buttonStart;
-        private System.Windows.Forms.OpenFileDialog openFileDialog;
-        private System.Windows.Forms.FontDialog fontDialog;
+        private TextBox textBoxDir;
+        private Button buttonOpen;
+        private GroupBox groupBoxText;
+        private TextBox textBoxBack;
+        private TextBox textBoxMid;
+        private TextBox textBoxFront;
+        private GroupBox groupBoxPlace;
+        private ComboBox comboBoxCorner;
+        private Label labelCorner;
+        private Button buttonFont;
+        private TextBox textBoxFont;
+        private GroupBox groupBoxFont;
+        private CheckBox checkBoxJpg;
+        private StatusStrip statusStripBottom;
+        private ToolStripProgressBar toolStripProgressBar;
+        private Button buttonStart;
+        private OpenFileDialog openFileDialog;
+        private FontDialog fontDialog;
     }
 }
 
