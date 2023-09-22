@@ -28,7 +28,7 @@ namespace monkey_image
         private void SetDefaultAttrComponent()
         {
             comboBoxCorner.SelectedIndex = 3; //底部左边
-            font = new Font("Arial", 80, FontStyle.Bold);
+            font = new Font("楷体", 80, FontStyle.Bold);
             textBoxFont.Text = font.ToString();
         }
 
@@ -196,11 +196,20 @@ namespace monkey_image
                 [FontStyle.Underline] = FontStyleType.Normal,
                 [FontStyle.Strikeout] = FontStyleType.Normal,
             };
+            var weightMap = new Dictionary<FontStyle, FontWeight>()
+            {
+                [FontStyle.Regular] = FontWeight.Normal,
+                [FontStyle.Bold] = FontWeight.Bold,
+                [FontStyle.Italic] = FontWeight.Normal,
+                [FontStyle.Underline] = FontWeight.Normal,
+                [FontStyle.Strikeout] = FontWeight.Normal,
+            };
 
-            inputImage.Settings.FontFamily = font.FontFamily.ToString();
+            inputImage.Settings.FontFamily = font.Name;
             inputImage.Settings.Font = font.Name;
             inputImage.Settings.FontPointsize = font.Size;
             inputImage.Settings.FontStyle = styleMap[font.Style];
+            inputImage.Settings.FontWeight = weightMap[font.Style];
             inputImage.Settings.FillColor = MagickColors.Yellow;
             inputImage.Settings.AntiAlias = true;
             var geo = new MagickGeometry(point.X, point.Y, 0, 0);
