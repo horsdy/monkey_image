@@ -6,7 +6,13 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>resource\pen.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="resource\pen.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="13.3.0" />

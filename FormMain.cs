@@ -111,7 +111,7 @@ namespace monkey_image
         {
             string datetime = DateTime.Now.ToString("yyyy/MM/dd");
 
-            Debug.WriteLine("handleGeneral:"+file);
+            Debug.WriteLine("handleGeneral:" + file);
             using MagickImage inputImage = new MagickImage(file);
             if (inputImage == null)
             {
@@ -183,7 +183,7 @@ namespace monkey_image
             return (CornType)comboBoxCorner.SelectedIndex;
         }
 
-        private System.Drawing.Imaging.PropertyItem?  getPropertyItem(Bitmap b, int id)
+        private System.Drawing.Imaging.PropertyItem? getPropertyItem(Bitmap b, int id)
         {
             System.Drawing.Imaging.PropertyItem? prop;
             try

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             textBoxDir = new TextBox();
             buttonOpen = new Button();
             groupBoxText = new GroupBox();
@@ -63,7 +64,7 @@
             // 
             buttonOpen.Location = new Point(411, 12);
             buttonOpen.Name = "buttonOpen";
-            buttonOpen.Size = new Size(75, 23);
+            buttonOpen.Size = new Size(75, 27);
             buttonOpen.TabIndex = 1;
             buttonOpen.Text = "打开";
             buttonOpen.UseVisualStyleBackColor = true;
@@ -111,7 +112,7 @@
             groupBoxPlace.Controls.Add(labelCorner);
             groupBoxPlace.Location = new Point(13, 111);
             groupBoxPlace.Name = "groupBoxPlace";
-            groupBoxPlace.Size = new Size(226, 129);
+            groupBoxPlace.Size = new Size(226, 138);
             groupBoxPlace.TabIndex = 3;
             groupBoxPlace.TabStop = false;
             groupBoxPlace.Text = "位置";
@@ -139,7 +140,7 @@
             // 
             buttonFont.Location = new Point(15, 25);
             buttonFont.Name = "buttonFont";
-            buttonFont.Size = new Size(75, 23);
+            buttonFont.Size = new Size(85, 28);
             buttonFont.TabIndex = 6;
             buttonFont.Text = "选择字体";
             buttonFont.UseVisualStyleBackColor = true;
@@ -147,7 +148,7 @@
             // 
             // textBoxFont
             // 
-            textBoxFont.Location = new Point(15, 54);
+            textBoxFont.Location = new Point(15, 66);
             textBoxFont.Multiline = true;
             textBoxFont.Name = "textBoxFont";
             textBoxFont.ReadOnly = true;
@@ -160,7 +161,7 @@
             groupBoxFont.Controls.Add(textBoxFont);
             groupBoxFont.Location = new Point(245, 111);
             groupBoxFont.Name = "groupBoxFont";
-            groupBoxFont.Size = new Size(241, 129);
+            groupBoxFont.Size = new Size(241, 138);
             groupBoxFont.TabIndex = 8;
             groupBoxFont.TabStop = false;
             groupBoxFont.Text = "字体";
@@ -171,7 +172,7 @@
             checkBoxJpg.Checked = true;
             checkBoxJpg.CheckState = CheckState.Checked;
             checkBoxJpg.Enabled = false;
-            checkBoxJpg.Location = new Point(13, 246);
+            checkBoxJpg.Location = new Point(13, 257);
             checkBoxJpg.Name = "checkBoxJpg";
             checkBoxJpg.Size = new Size(85, 24);
             checkBoxJpg.TabIndex = 0;
@@ -182,7 +183,7 @@
             // 
             statusStripBottom.ImageScalingSize = new Size(20, 20);
             statusStripBottom.Items.AddRange(new ToolStripItem[] { toolStripProgressBar });
-            statusStripBottom.Location = new Point(0, 293);
+            statusStripBottom.Location = new Point(0, 305);
             statusStripBottom.Name = "statusStripBottom";
             statusStripBottom.Size = new Size(498, 24);
             statusStripBottom.SizingGrip = false;
@@ -198,7 +199,7 @@
             // 
             buttonStart.Location = new Point(411, 267);
             buttonStart.Name = "buttonStart";
-            buttonStart.Size = new Size(75, 23);
+            buttonStart.Size = new Size(75, 35);
             buttonStart.TabIndex = 11;
             buttonStart.Text = "开始";
             buttonStart.UseVisualStyleBackColor = true;
@@ -211,9 +212,9 @@
             // 
             // FormMain
             // 
-            AutoScaleDimensions = new SizeF(9F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(498, 317);
+            AutoScaleDimensions = new SizeF(120F, 120F);
+            AutoScaleMode = AutoScaleMode.Dpi;
+            ClientSize = new Size(498, 329);
             Controls.Add(checkBoxJpg);
             Controls.Add(buttonStart);
             Controls.Add(statusStripBottom);
@@ -224,6 +225,7 @@
             Controls.Add(textBoxDir);
             Font = new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point);
             FormBorderStyle = FormBorderStyle.Fixed3D;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "FormMain";
