@@ -28,7 +28,7 @@ namespace monkey_image
         private void SetDefaultAttrComponent()
         {
             comboBoxCorner.SelectedIndex = 3; //底部左边
-            font = new Font("楷体", 80, FontStyle.Bold);
+            font = new Font("Arial", 120, FontStyle.Bold);
             textBoxFont.Text = font.ToString();
         }
 
@@ -109,8 +109,8 @@ namespace monkey_image
             string datetime = DateTime.Now.ToString("yyyy/MM/dd");
 
             Debug.WriteLine("handleJpg");
-            using Bitmap fileBitMap = new Bitmap(file);
-            var prop = fileBitMap.GetPropertyItem(0x9003);
+            using Bitmap inputBitMap = new Bitmap(file);
+            var prop = inputBitMap.GetPropertyItem(0x9003);
             if (prop != null)
             {
                 datetime = Encoding.Default.GetString(prop.Value).Trim('\0');
@@ -121,8 +121,8 @@ namespace monkey_image
             Debug.WriteLine("{0} text: {1}", file, text);
 
             // 获取图像宽度和高度
-            int width = fileBitMap.Width;
-            int height = fileBitMap.Height;
+            int width = inputBitMap.Width;
+            int height = inputBitMap.Height;
             Size size = TextRenderer.MeasureText(text, font);
             int childWidth = size.Width;
             int childHeight = size.Height;
@@ -135,22 +135,22 @@ namespace monkey_image
             // 设置字体和颜色
             SolidBrush brush = new SolidBrush(Color.Yellow);
 
-            // 在元数据区域中绘制文本框
-            using Graphics metaGraph = Graphics.FromImage(metaBitmap);
-            metaGraph.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            metaGraph.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            metaGraph.DrawString(text, font, brush, new Rectangle(0, 0, childWidth, childHeight));
-
-            // 将元数据区域合并到主图像上
-            using Graphics fileGraph = Graphics.FromImage(fileBitMap);
-            fileGraph.DrawImage(metaBitmap, new Rectangle(point.X, point.Y, childWidth, childHeight));
+            using Graphics inputGraph = Graphics.FromImage(inputBitMap);
+            inputGraph.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            inputGraph.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+            var rect = new Rectangle(point.X, point.Y, childWidth, childHeight);
+            var drawFormat = new StringFormat();
+            drawFormat.Alignment = StringAlignment.Center;
+            drawFormat.LineAlignment = StringAlignment.Center;
+            inputGraph.DrawString(text, font, brush, rect, drawFormat);
 
             // 保存修改后的图像到磁盘
-            string outputFile = "Output_" + Path.GetFileNameWithoutExtension(file) + ".jpg";
+            string outputFile = string.Format("Output_{0}_{1}.{2}", 
+                (int)getCornType(), Path.GetFileNameWithoutExtension(file), "jpg");
             string outputPath = Path.Combine(Path.GetDirectoryName(file), outputFile);
-            fileBitMap.Save(outputPath);
+            inputBitMap.Save(outputPath);
 
-            Debug.WriteLine("handle end", file);
+            Debug.WriteLine("{0}:handle end, output:{1}", file, outputPath);
             return true;
         }
 
@@ -216,7 +216,8 @@ namespace monkey_image
             inputImage.Annotate(text, geo);
 
             // Save to the new file
-            string outputFile = "Output_" + Path.GetFileNameWithoutExtension(file) + ".jpg";
+            string outputFile = string.Format("Output_{0}_{1}.{2}",
+                (int)getCornType(), Path.GetFileNameWithoutExtension(file), "jpg");
             string outputPath = Path.Combine(Path.GetDirectoryName(file), outputFile);
             inputImage.Quality = 75;
             inputImage.Write(outputPath);
@@ -268,22 +269,22 @@ namespace monkey_image
 
                 case CornType.BottomLeft:
                     x = width * 1 / 24;
-                    y = height * 31 / 32;
+                    y = height * 30 / 32;
                     break;
 
                 case CornType.BottomCenter:
                     x = (width - childWidth) / 2;
-                    y = height * 31 / 32;
+                    y = height * 30 / 32;
                     break;
 
                 case CornType.BottomRight:
                     x = width - childWidth - width * 1 / 24;
-                    y = height * 31 / 32;
+                    y = height * 30 / 32;
                     break;
 
                 default:
                     x = width * 1 / 24;
-                    y = height * 31 / 32;
+                    y = height * 30 / 32;
                     break;
             }
 
