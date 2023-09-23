@@ -56,7 +56,7 @@
             // 
             textBoxDir.Location = new Point(12, 12);
             textBoxDir.Name = "textBoxDir";
-            textBoxDir.Size = new Size(393, 23);
+            textBoxDir.Size = new Size(393, 27);
             textBoxDir.TabIndex = 0;
             // 
             // buttonOpen
@@ -85,7 +85,7 @@
             // 
             textBoxBack.Location = new Point(315, 23);
             textBoxBack.Name = "textBoxBack";
-            textBoxBack.Size = new Size(151, 23);
+            textBoxBack.Size = new Size(151, 27);
             textBoxBack.TabIndex = 2;
             // 
             // textBoxMid
@@ -93,7 +93,7 @@
             textBoxMid.Location = new Point(161, 23);
             textBoxMid.Name = "textBoxMid";
             textBoxMid.ReadOnly = true;
-            textBoxMid.Size = new Size(143, 23);
+            textBoxMid.Size = new Size(143, 27);
             textBoxMid.TabIndex = 1;
             textBoxMid.Text = "日期";
             textBoxMid.TextAlign = HorizontalAlignment.Center;
@@ -102,7 +102,7 @@
             // 
             textBoxFront.Location = new Point(7, 23);
             textBoxFront.Name = "textBoxFront";
-            textBoxFront.Size = new Size(143, 23);
+            textBoxFront.Size = new Size(143, 27);
             textBoxFront.TabIndex = 0;
             // 
             // groupBoxPlace
@@ -123,7 +123,7 @@
             comboBoxCorner.Items.AddRange(new object[] { "顶部左边", "顶部中间", "顶部右边", "底部左边", "底部中间", "底部右边" });
             comboBoxCorner.Location = new Point(52, 25);
             comboBoxCorner.Name = "comboBoxCorner";
-            comboBoxCorner.Size = new Size(100, 25);
+            comboBoxCorner.Size = new Size(100, 28);
             comboBoxCorner.TabIndex = 1;
             // 
             // labelCorner
@@ -131,7 +131,7 @@
             labelCorner.AutoSize = true;
             labelCorner.Location = new Point(7, 31);
             labelCorner.Name = "labelCorner";
-            labelCorner.Size = new Size(39, 17);
+            labelCorner.Size = new Size(47, 20);
             labelCorner.TabIndex = 0;
             labelCorner.Text = "方位 :";
             // 
@@ -173,17 +173,18 @@
             checkBoxJpg.Enabled = false;
             checkBoxJpg.Location = new Point(13, 246);
             checkBoxJpg.Name = "checkBoxJpg";
-            checkBoxJpg.Size = new Size(70, 21);
+            checkBoxJpg.Size = new Size(85, 24);
             checkBoxJpg.TabIndex = 0;
             checkBoxJpg.Text = "转为jpg";
             checkBoxJpg.UseVisualStyleBackColor = true;
             // 
             // statusStripBottom
             // 
+            statusStripBottom.ImageScalingSize = new Size(20, 20);
             statusStripBottom.Items.AddRange(new ToolStripItem[] { toolStripProgressBar });
-            statusStripBottom.Location = new Point(0, 295);
+            statusStripBottom.Location = new Point(0, 293);
             statusStripBottom.Name = "statusStripBottom";
-            statusStripBottom.Size = new Size(498, 22);
+            statusStripBottom.Size = new Size(498, 24);
             statusStripBottom.SizingGrip = false;
             statusStripBottom.TabIndex = 10;
             statusStripBottom.Text = "statusStrip";
@@ -205,12 +206,12 @@
             // 
             // openFileDialog
             // 
-            openFileDialog.Filter = "图片|*.heic;*.jpg;*.jpeg;";
+            openFileDialog.Filter = "图片|*.heic;*.jpg;*.jpeg;*.png;";
             openFileDialog.Multiselect = true;
             // 
             // FormMain
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleDimensions = new SizeF(9F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(498, 317);
             Controls.Add(checkBoxJpg);

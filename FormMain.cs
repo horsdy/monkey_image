@@ -24,6 +24,8 @@ namespace monkey_image
             BottomRight     //底部右边
         }
 
+        public const int ExifDTOriginalId = 0x9003;
+
         // 设置组件的默认属性
         private void SetDefaultAttrComponent()
         {
@@ -35,9 +37,10 @@ namespace monkey_image
         private void InitializeTypeMap()
         {
             typeMap = new Dictionary<string, HandleImage>(){
-                {".jpg", handleJpg},
-                {".jpeg", handleJpg},
-                {".heic", handleHeic}
+                {".jpg", handleGeneral},
+                {".jpeg", handleGeneral},
+                {".png", handleGeneral},
+                {".heic", handleGeneral}
             };
         }
 
@@ -104,13 +107,21 @@ namespace monkey_image
             return true;
         }
 
-        private bool handleJpg(string file)
+        private bool handleGeneral(string file)
         {
             string datetime = DateTime.Now.ToString("yyyy/MM/dd");
 
-            Debug.WriteLine("handleJpg");
-            using Bitmap inputBitMap = new Bitmap(file);
-            var prop = inputBitMap.GetPropertyItem(0x9003);
+            Debug.WriteLine("handleGeneral:"+file);
+            using MagickImage inputImage = new MagickImage(file);
+            if (inputImage == null)
+            {
+                Debug.WriteLine("open file failed:" + file);
+                return false;
+            }
+
+            using Bitmap inputBitMap = inputImage.ToBitmap(System.Drawing.Imaging.ImageFormat.Jpeg);
+            System.Drawing.Imaging.PropertyItem? prop;
+            prop = getPropertyItem(inputBitMap, ExifDTOriginalId);
             if (prop != null)
             {
                 datetime = Encoding.Default.GetString(prop.Value).Trim('\0');
@@ -145,82 +156,11 @@ namespace monkey_image
             inputGraph.DrawString(text, font, brush, rect, drawFormat);
 
             // 保存修改后的图像到磁盘
-            string outputFile = string.Format("Output_{0}_{1}.{2}", 
+            string outputFile = string.Format("Output_{0}_{1}.{2}",
                 (int)getCornType(), Path.GetFileNameWithoutExtension(file), "jpg");
             string outputPath = Path.Combine(Path.GetDirectoryName(file), outputFile);
             inputBitMap.Save(outputPath);
 
-            Debug.WriteLine("{0}:handle end, output:{1}", file, outputPath);
-            return true;
-        }
-
-        private bool handleHeic(string file)
-        {
-            string datetime = DateTime.Now.ToString("yyyy/MM/dd");
-
-            Debug.WriteLine("handleHeic");
-            using MagickImage inputImage = new MagickImage(file);
-            if (inputImage == null)
-            {
-                Debug.WriteLine("open file failed:{0}", file);
-                return false;
-            }
-            var height = inputImage.Height;
-            var width = inputImage.Width;
-
-            var exif = inputImage.GetExifProfile();
-            var value = exif.GetValue(ExifTag.DateTimeOriginal);
-            if (value != null)
-            {
-                var str = value.Value;
-                Debug.WriteLine("{0} datetime: {1}", file, str);
-                if (str != null)
-                {
-                    datetime = str.Split(' ')[0].Replace(':', '/');
-                }
-            }
-            var text = getFrontCaption() + datetime + getBackCaption();
-            Debug.WriteLine("{0} text: {1}", file, text);
-
-            Size size = TextRenderer.MeasureText(text, font);
-            int childWidth = size.Width;
-            int childHeight = size.Height;
-            Debug.WriteLine("MeasureText size: {0},{1}", size.Width, size.Height);
-
-            Point point = calcCoordinate(width, height, childWidth, childHeight);
-            var styleMap = new Dictionary<FontStyle, FontStyleType>()
-            {
-                [FontStyle.Regular] = FontStyleType.Normal,
-                [FontStyle.Bold] = FontStyleType.Bold,
-                [FontStyle.Italic] = FontStyleType.Italic,
-                [FontStyle.Underline] = FontStyleType.Normal,
-                [FontStyle.Strikeout] = FontStyleType.Normal,
-            };
-            var weightMap = new Dictionary<FontStyle, FontWeight>()
-            {
-                [FontStyle.Regular] = FontWeight.Normal,
-                [FontStyle.Bold] = FontWeight.Bold,
-                [FontStyle.Italic] = FontWeight.Normal,
-                [FontStyle.Underline] = FontWeight.Normal,
-                [FontStyle.Strikeout] = FontWeight.Normal,
-            };
-
-            inputImage.Settings.FontFamily = font.Name;
-            inputImage.Settings.Font = font.Name;
-            inputImage.Settings.FontPointsize = font.Size;
-            inputImage.Settings.FontStyle = styleMap[font.Style];
-            inputImage.Settings.FontWeight = weightMap[font.Style];
-            inputImage.Settings.FillColor = MagickColors.Yellow;
-            inputImage.Settings.AntiAlias = true;
-            var geo = new MagickGeometry(point.X, point.Y, 0, 0);
-            inputImage.Annotate(text, geo);
-
-            // Save to the new file
-            string outputFile = string.Format("Output_{0}_{1}.{2}",
-                (int)getCornType(), Path.GetFileNameWithoutExtension(file), "jpg");
-            string outputPath = Path.Combine(Path.GetDirectoryName(file), outputFile);
-            inputImage.Quality = 75;
-            inputImage.Write(outputPath);
             Debug.WriteLine("{0}:handle end, output:{1}", file, outputPath);
             return true;
         }
@@ -241,6 +181,21 @@ namespace monkey_image
         private CornType getCornType()
         {
             return (CornType)comboBoxCorner.SelectedIndex;
+        }
+
+        private System.Drawing.Imaging.PropertyItem?  getPropertyItem(Bitmap b, int id)
+        {
+            System.Drawing.Imaging.PropertyItem? prop;
+            try
+            {
+                prop = b.GetPropertyItem(id);
+                return prop;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"{ex.Message}");
+            }
+            return null;
         }
 
         // 计算子元素的坐标
