@@ -8,6 +8,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>resource\pen.ico</ApplicationIcon>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Title>MonkeyImage</Title>
+    <Description>在图片上绘制原始日期</Description>
+    <Copyright>Copyright(C) 2023 houshidi@sina.com</Copyright>
+    <Authors>$(Authors)</Authors>
   </PropertyGroup>
 
   <ItemGroup>
