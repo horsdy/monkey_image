@@ -35,20 +35,24 @@
             textBoxBack = new TextBox();
             textBoxMid = new TextBox();
             textBoxFront = new TextBox();
-            groupBoxPlace = new GroupBox();
+            groupBoxGraph = new GroupBox();
+            numericQuality = new NumericUpDown();
+            labelQuality = new Label();
+            checkBoxJpg = new CheckBox();
             comboBoxCorner = new ComboBox();
             labelCorner = new Label();
             buttonFont = new Button();
             textBoxFont = new TextBox();
             groupBoxFont = new GroupBox();
-            checkBoxJpg = new CheckBox();
             statusStripBottom = new StatusStrip();
             toolStripProgressBar = new ToolStripProgressBar();
             buttonStart = new Button();
             openFileDialog = new OpenFileDialog();
             fontDialog = new FontDialog();
+            checkBoxDrawText = new CheckBox();
             groupBoxText.SuspendLayout();
-            groupBoxPlace.SuspendLayout();
+            groupBoxGraph.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericQuality).BeginInit();
             groupBoxFont.SuspendLayout();
             statusStripBottom.SuspendLayout();
             SuspendLayout();
@@ -106,16 +110,52 @@
             textBoxFront.Size = new Size(143, 27);
             textBoxFront.TabIndex = 0;
             // 
-            // groupBoxPlace
+            // groupBoxGraph
             // 
-            groupBoxPlace.Controls.Add(comboBoxCorner);
-            groupBoxPlace.Controls.Add(labelCorner);
-            groupBoxPlace.Location = new Point(13, 111);
-            groupBoxPlace.Name = "groupBoxPlace";
-            groupBoxPlace.Size = new Size(226, 138);
-            groupBoxPlace.TabIndex = 3;
-            groupBoxPlace.TabStop = false;
-            groupBoxPlace.Text = "位置";
+            groupBoxGraph.Controls.Add(checkBoxDrawText);
+            groupBoxGraph.Controls.Add(numericQuality);
+            groupBoxGraph.Controls.Add(labelQuality);
+            groupBoxGraph.Controls.Add(checkBoxJpg);
+            groupBoxGraph.Controls.Add(comboBoxCorner);
+            groupBoxGraph.Controls.Add(labelCorner);
+            groupBoxGraph.Location = new Point(13, 111);
+            groupBoxGraph.Name = "groupBoxGraph";
+            groupBoxGraph.Size = new Size(226, 138);
+            groupBoxGraph.TabIndex = 3;
+            groupBoxGraph.TabStop = false;
+            groupBoxGraph.Text = "图像";
+            // 
+            // numericQuality
+            // 
+            numericQuality.Increment = new decimal(new int[] { 5, 0, 0, 0 });
+            numericQuality.Location = new Point(52, 64);
+            numericQuality.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
+            numericQuality.Name = "numericQuality";
+            numericQuality.Size = new Size(100, 27);
+            numericQuality.TabIndex = 3;
+            numericQuality.Value = new decimal(new int[] { 80, 0, 0, 0 });
+            // 
+            // labelQuality
+            // 
+            labelQuality.AutoSize = true;
+            labelQuality.Location = new Point(7, 66);
+            labelQuality.Name = "labelQuality";
+            labelQuality.Size = new Size(43, 20);
+            labelQuality.TabIndex = 2;
+            labelQuality.Text = "质量:";
+            // 
+            // checkBoxJpg
+            // 
+            checkBoxJpg.AutoSize = true;
+            checkBoxJpg.Checked = true;
+            checkBoxJpg.CheckState = CheckState.Checked;
+            checkBoxJpg.Enabled = false;
+            checkBoxJpg.Location = new Point(7, 97);
+            checkBoxJpg.Name = "checkBoxJpg";
+            checkBoxJpg.Size = new Size(85, 24);
+            checkBoxJpg.TabIndex = 0;
+            checkBoxJpg.Text = "转为jpg";
+            checkBoxJpg.UseVisualStyleBackColor = true;
             // 
             // comboBoxCorner
             // 
@@ -166,19 +206,6 @@
             groupBoxFont.TabStop = false;
             groupBoxFont.Text = "字体";
             // 
-            // checkBoxJpg
-            // 
-            checkBoxJpg.AutoSize = true;
-            checkBoxJpg.Checked = true;
-            checkBoxJpg.CheckState = CheckState.Checked;
-            checkBoxJpg.Enabled = false;
-            checkBoxJpg.Location = new Point(13, 257);
-            checkBoxJpg.Name = "checkBoxJpg";
-            checkBoxJpg.Size = new Size(85, 24);
-            checkBoxJpg.TabIndex = 0;
-            checkBoxJpg.Text = "转为jpg";
-            checkBoxJpg.UseVisualStyleBackColor = true;
-            // 
             // statusStripBottom
             // 
             statusStripBottom.ImageScalingSize = new Size(20, 20);
@@ -210,16 +237,27 @@
             openFileDialog.Filter = "图片|*.heic;*.jpg;*.jpeg;*.png;";
             openFileDialog.Multiselect = true;
             // 
+            // checkBoxDrawText
+            // 
+            checkBoxDrawText.AutoSize = true;
+            checkBoxDrawText.Checked = true;
+            checkBoxDrawText.CheckState = CheckState.Checked;
+            checkBoxDrawText.Location = new Point(98, 97);
+            checkBoxDrawText.Name = "checkBoxDrawText";
+            checkBoxDrawText.Size = new Size(91, 24);
+            checkBoxDrawText.TabIndex = 4;
+            checkBoxDrawText.Text = "绘制文本";
+            checkBoxDrawText.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(498, 329);
-            Controls.Add(checkBoxJpg);
             Controls.Add(buttonStart);
             Controls.Add(statusStripBottom);
             Controls.Add(groupBoxFont);
-            Controls.Add(groupBoxPlace);
+            Controls.Add(groupBoxGraph);
             Controls.Add(groupBoxText);
             Controls.Add(buttonOpen);
             Controls.Add(textBoxDir);
@@ -233,8 +271,9 @@
             Text = "MonkeyImage v1.0";
             groupBoxText.ResumeLayout(false);
             groupBoxText.PerformLayout();
-            groupBoxPlace.ResumeLayout(false);
-            groupBoxPlace.PerformLayout();
+            groupBoxGraph.ResumeLayout(false);
+            groupBoxGraph.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericQuality).EndInit();
             groupBoxFont.ResumeLayout(false);
             groupBoxFont.PerformLayout();
             statusStripBottom.ResumeLayout(false);
@@ -251,7 +290,7 @@
         private TextBox textBoxBack;
         private TextBox textBoxMid;
         private TextBox textBoxFront;
-        private GroupBox groupBoxPlace;
+        private GroupBox groupBoxGraph;
         private ComboBox comboBoxCorner;
         private Label labelCorner;
         private Button buttonFont;
@@ -263,6 +302,9 @@
         private Button buttonStart;
         private OpenFileDialog openFileDialog;
         private FontDialog fontDialog;
+        private NumericUpDown numericQuality;
+        private Label labelQuality;
+        private CheckBox checkBoxDrawText;
     }
 }
 

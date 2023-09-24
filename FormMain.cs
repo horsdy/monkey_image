@@ -2,6 +2,8 @@
 using Path = System.IO.Path;
 using ImageMagick;
 using System.Diagnostics;
+using System.Drawing.Imaging;
+using System.Runtime.Intrinsics.X86;
 
 namespace monkey_image
 {
@@ -63,7 +65,11 @@ namespace monkey_image
                 return;
             }
             Debug.WriteLine("processing start");
+
             buttonStart.Enabled = false;
+            numericQuality.Enabled = false;
+            buttonFont.Enabled = false;
+
             toolStripProgressBar.Minimum = 0;
             toolStripProgressBar.Maximum = filePaths.Length;
             toolStripProgressBar.Value = 0;
@@ -78,6 +84,9 @@ namespace monkey_image
                 }
                 toolStripProgressBar.PerformStep();
             }
+
+            buttonFont.Enabled = true;
+            numericQuality.Enabled = true;
             buttonStart.Enabled = true;
 
             Debug.WriteLine("processing end");
@@ -119,47 +128,55 @@ namespace monkey_image
                 return false;
             }
 
-            using Bitmap inputBitMap = inputImage.ToBitmap(System.Drawing.Imaging.ImageFormat.Jpeg);
-            System.Drawing.Imaging.PropertyItem? prop;
-            prop = getPropertyItem(inputBitMap, ExifDTOriginalId);
-            if (prop != null)
+            using Bitmap inputBitMap = inputImage.ToBitmap(ImageFormat.Jpeg);
+
+            // 绘制文字
+            if (useDrawText())
             {
-                datetime = Encoding.Default.GetString(prop.Value).Trim('\0');
-                Debug.WriteLine("{0} datetime: {1}", file, datetime);
-                datetime = datetime.Split(' ')[0].Replace(':', '/');
+                PropertyItem? prop;
+                prop = getPropertyItem(inputBitMap, ExifDTOriginalId);
+                if (prop != null && prop.Value != null)
+                {
+                    datetime = Encoding.Default.GetString(prop.Value).Trim('\0');
+                    Debug.WriteLine("{0} datetime: {1}", file, datetime);
+                    datetime = datetime.Split(' ')[0].Replace(':', '/');
+                }
+                var text = getFrontCaption() + datetime + getBackCaption();
+                Debug.WriteLine("{0} text: {1}", file, text);
+
+                // 获取图像宽度和高度
+                int width = inputBitMap.Width;
+                int height = inputBitMap.Height;
+                Size size = TextRenderer.MeasureText(text, font);
+                int childWidth = size.Width;
+                int childHeight = size.Height;
+                Debug.WriteLine("MeasureText size: {0},{1}", size.Width, size.Height);
+                Point point = calcCoordinate(width, height, childWidth, childHeight);
+
+                // 设置字体和颜色
+                SolidBrush brush = new SolidBrush(Color.Yellow);
+
+                using Graphics inputGraph = Graphics.FromImage(inputBitMap);
+                inputGraph.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                inputGraph.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                var rect = new Rectangle(point.X, point.Y, childWidth, childHeight);
+                var drawFormat = new StringFormat();
+                drawFormat.Alignment = StringAlignment.Center;
+                drawFormat.LineAlignment = StringAlignment.Center;
+                inputGraph.DrawString(text, font, brush, rect, drawFormat);
             }
-            var text = getFrontCaption() + datetime + getBackCaption();
-            Debug.WriteLine("{0} text: {1}", file, text);
-
-            // 获取图像宽度和高度
-            int width = inputBitMap.Width;
-            int height = inputBitMap.Height;
-            Size size = TextRenderer.MeasureText(text, font);
-            int childWidth = size.Width;
-            int childHeight = size.Height;
-            Debug.WriteLine("MeasureText size: {0},{1}", size.Width, size.Height);
-            Point point = calcCoordinate(width, height, childWidth, childHeight);
-
-            // 创建元数据区域
-            using Bitmap metaBitmap = new Bitmap(childWidth, childHeight);
-
-            // 设置字体和颜色
-            SolidBrush brush = new SolidBrush(Color.Yellow);
-
-            using Graphics inputGraph = Graphics.FromImage(inputBitMap);
-            inputGraph.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            inputGraph.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-            var rect = new Rectangle(point.X, point.Y, childWidth, childHeight);
-            var drawFormat = new StringFormat();
-            drawFormat.Alignment = StringAlignment.Center;
-            drawFormat.LineAlignment = StringAlignment.Center;
-            inputGraph.DrawString(text, font, brush, rect, drawFormat);
+            // 创建编码器
+            ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
+            System.Drawing.Imaging.Encoder encoder = System.Drawing.Imaging.Encoder.Quality;
+            EncoderParameters enParams = new EncoderParameters(1);
+            EncoderParameter enParam = new EncoderParameter(encoder, getQuality());
+            enParams.Param[0] = enParam;
 
             // 保存修改后的图像到磁盘
             string outputFile = string.Format("Output_{0}_{1}.{2}",
                 (int)getCornType(), Path.GetFileNameWithoutExtension(file), "jpg");
             string outputPath = Path.Combine(Path.GetDirectoryName(file), outputFile);
-            inputBitMap.Save(outputPath);
+            inputBitMap.Save(outputPath, jpgEncoder, enParams);
 
             Debug.WriteLine("{0}:handle end, output:{1}", file, outputPath);
             return true;
@@ -183,6 +200,24 @@ namespace monkey_image
             return (CornType)comboBoxCorner.SelectedIndex;
         }
 
+        // 获取转换质量
+        private int getQuality()
+        {
+            var def = 80;
+            var q = ((int)numericQuality.Value);
+            if (q >= numericQuality.Minimum && q <= numericQuality.Maximum)
+            {
+                return q;
+            }
+            return def;
+        }
+
+        // 是否绘制文本
+        private bool useDrawText()
+        {
+            return checkBoxDrawText.Checked;
+        }
+
         private System.Drawing.Imaging.PropertyItem? getPropertyItem(Bitmap b, int id)
         {
             System.Drawing.Imaging.PropertyItem? prop;
@@ -194,6 +229,19 @@ namespace monkey_image
             catch (Exception ex)
             {
                 Debug.WriteLine($"{ex.Message}");
+            }
+            return null;
+        }
+
+        private ImageCodecInfo GetEncoder(ImageFormat format)
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageEncoders();
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == format.Guid)
+                {
+                    return codec;
+                }
             }
             return null;
         }
@@ -247,14 +295,6 @@ namespace monkey_image
             p.Y = y;
             return p;
         }
-
-        // 打印字节码
-        private void printEncode(string s)
-        {
-            byte[] bytes = Encoding.Default.GetBytes(s);
-            Debug.WriteLine(BitConverter.ToString(bytes));
-        }
-
 
         private string[]? filePaths;
         private Dictionary<string, HandleImage>? typeMap;
