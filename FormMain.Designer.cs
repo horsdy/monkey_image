@@ -229,6 +229,7 @@
             Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             Name = "FormMain";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "MonkeyImage v1.0";
             groupBoxText.ResumeLayout(false);
             groupBoxText.PerformLayout();
