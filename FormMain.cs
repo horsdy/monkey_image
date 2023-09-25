@@ -91,6 +91,14 @@ namespace monkey_image
 
             Debug.WriteLine("processing end");
         }
+
+        private void buttonAbout_Click(object sender, EventArgs e)
+        {
+            string appProper = string.Format("Monkey Image\nVersion: {0}\nAuthor: {1}",
+                "v1.0.0", "houshidi@sina.com");
+            MessageBox.Show(appProper, "关于");
+        }
+
         private void buttonFont_Click(object sender, EventArgs e)
         {
             if (fontDialog.ShowDialog() == DialogResult.OK)
