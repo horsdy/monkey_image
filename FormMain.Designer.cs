@@ -51,6 +51,7 @@
             openFileDialog = new OpenFileDialog();
             fontDialog = new FontDialog();
             buttonAbout = new Button();
+            bgWorker = new System.ComponentModel.BackgroundWorker();
             groupBoxText.SuspendLayout();
             groupBoxGraph.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericQuality).BeginInit();
@@ -62,7 +63,7 @@
             // 
             textBoxDir.Location = new Point(12, 12);
             textBoxDir.Name = "textBoxDir";
-            textBoxDir.Size = new Size(393, 23);
+            textBoxDir.Size = new Size(393, 27);
             textBoxDir.TabIndex = 0;
             // 
             // buttonOpen
@@ -91,7 +92,7 @@
             // 
             textBoxBack.Location = new Point(315, 23);
             textBoxBack.Name = "textBoxBack";
-            textBoxBack.Size = new Size(151, 23);
+            textBoxBack.Size = new Size(151, 27);
             textBoxBack.TabIndex = 2;
             // 
             // textBoxMid
@@ -99,7 +100,7 @@
             textBoxMid.Location = new Point(161, 23);
             textBoxMid.Name = "textBoxMid";
             textBoxMid.ReadOnly = true;
-            textBoxMid.Size = new Size(143, 23);
+            textBoxMid.Size = new Size(143, 27);
             textBoxMid.TabIndex = 1;
             textBoxMid.Text = "日期";
             textBoxMid.TextAlign = HorizontalAlignment.Center;
@@ -108,7 +109,7 @@
             // 
             textBoxFront.Location = new Point(7, 23);
             textBoxFront.Name = "textBoxFront";
-            textBoxFront.Size = new Size(143, 23);
+            textBoxFront.Size = new Size(143, 27);
             textBoxFront.TabIndex = 0;
             // 
             // groupBoxGraph
@@ -133,7 +134,7 @@
             checkBoxDrawText.CheckState = CheckState.Checked;
             checkBoxDrawText.Location = new Point(98, 97);
             checkBoxDrawText.Name = "checkBoxDrawText";
-            checkBoxDrawText.Size = new Size(75, 21);
+            checkBoxDrawText.Size = new Size(91, 24);
             checkBoxDrawText.TabIndex = 4;
             checkBoxDrawText.Text = "绘制文本";
             checkBoxDrawText.UseVisualStyleBackColor = true;
@@ -144,7 +145,7 @@
             numericQuality.Location = new Point(52, 64);
             numericQuality.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
             numericQuality.Name = "numericQuality";
-            numericQuality.Size = new Size(100, 23);
+            numericQuality.Size = new Size(100, 27);
             numericQuality.TabIndex = 3;
             numericQuality.Value = new decimal(new int[] { 80, 0, 0, 0 });
             // 
@@ -153,7 +154,7 @@
             labelQuality.AutoSize = true;
             labelQuality.Location = new Point(7, 66);
             labelQuality.Name = "labelQuality";
-            labelQuality.Size = new Size(35, 17);
+            labelQuality.Size = new Size(43, 20);
             labelQuality.TabIndex = 2;
             labelQuality.Text = "质量:";
             // 
@@ -165,7 +166,7 @@
             checkBoxJpg.Enabled = false;
             checkBoxJpg.Location = new Point(7, 97);
             checkBoxJpg.Name = "checkBoxJpg";
-            checkBoxJpg.Size = new Size(70, 21);
+            checkBoxJpg.Size = new Size(85, 24);
             checkBoxJpg.TabIndex = 0;
             checkBoxJpg.Text = "转为jpg";
             checkBoxJpg.UseVisualStyleBackColor = true;
@@ -177,7 +178,7 @@
             comboBoxCorner.Items.AddRange(new object[] { "顶部左边", "顶部中间", "顶部右边", "底部左边", "底部中间", "底部右边" });
             comboBoxCorner.Location = new Point(52, 25);
             comboBoxCorner.Name = "comboBoxCorner";
-            comboBoxCorner.Size = new Size(100, 25);
+            comboBoxCorner.Size = new Size(100, 28);
             comboBoxCorner.TabIndex = 1;
             // 
             // labelCorner
@@ -185,7 +186,7 @@
             labelCorner.AutoSize = true;
             labelCorner.Location = new Point(7, 31);
             labelCorner.Name = "labelCorner";
-            labelCorner.Size = new Size(39, 17);
+            labelCorner.Size = new Size(47, 20);
             labelCorner.TabIndex = 0;
             labelCorner.Text = "方位 :";
             // 
@@ -223,9 +224,9 @@
             // 
             statusStripBottom.ImageScalingSize = new Size(20, 20);
             statusStripBottom.Items.AddRange(new ToolStripItem[] { toolStripProgressBar });
-            statusStripBottom.Location = new Point(0, 307);
+            statusStripBottom.Location = new Point(0, 305);
             statusStripBottom.Name = "statusStripBottom";
-            statusStripBottom.Size = new Size(498, 22);
+            statusStripBottom.Size = new Size(498, 24);
             statusStripBottom.SizingGrip = false;
             statusStripBottom.TabIndex = 10;
             statusStripBottom.Text = "statusStrip";
@@ -254,15 +255,19 @@
             // 
             buttonAbout.Location = new Point(13, 267);
             buttonAbout.Name = "buttonAbout";
-            buttonAbout.Size = new Size(42, 35);
+            buttonAbout.Size = new Size(50, 35);
             buttonAbout.TabIndex = 12;
             buttonAbout.Text = "关于";
             buttonAbout.UseVisualStyleBackColor = true;
             buttonAbout.Click += buttonAbout_Click;
             // 
+            // bgWorker
+            // 
+            bgWorker.WorkerReportsProgress = true;
+            // 
             // FormMain
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleDimensions = new SizeF(120F, 120F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(498, 329);
             Controls.Add(buttonAbout);
@@ -318,6 +323,7 @@
         private Label labelQuality;
         private CheckBox checkBoxDrawText;
         private Button buttonAbout;
+        private System.ComponentModel.BackgroundWorker bgWorker;
     }
 }
 

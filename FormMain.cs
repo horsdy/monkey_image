@@ -3,7 +3,7 @@ using Path = System.IO.Path;
 using ImageMagick;
 using System.Diagnostics;
 using System.Drawing.Imaging;
-using System.Runtime.Intrinsics.X86;
+using System.ComponentModel;
 
 namespace monkey_image
 {
@@ -13,6 +13,7 @@ namespace monkey_image
         {
             InitializeComponent();
             SetDefaultAttrComponent();
+            InitializeBackgroundWorker();
             InitializeTypeMap();
         }
 
@@ -34,6 +35,14 @@ namespace monkey_image
             comboBoxCorner.SelectedIndex = 3; //底部左边
             font = new Font("Arial", 120, FontStyle.Bold);
             textBoxFont.Text = font.ToString();
+        }
+
+        // 注册后台任务相关函数
+        private void InitializeBackgroundWorker()
+        {
+            bgWorker.DoWork += new DoWorkEventHandler(bgWorker_DoWork);
+            bgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bgWorker_Completed);
+            bgWorker.ProgressChanged += new ProgressChangedEventHandler(bgWorker_ProgressChanged);
         }
 
         private void InitializeTypeMap()
@@ -66,30 +75,22 @@ namespace monkey_image
             }
             Debug.WriteLine("processing start");
 
+            readSetting();
+
+            textBoxDir.Enabled = false;
+            buttonOpen.Enabled = false;
+            groupBoxText.Enabled = false;
+            groupBoxGraph.Enabled = false;
+            groupBoxFont.Enabled = false;
+            buttonAbout.Enabled = false;
             buttonStart.Enabled = false;
-            numericQuality.Enabled = false;
-            buttonFont.Enabled = false;
 
             toolStripProgressBar.Minimum = 0;
             toolStripProgressBar.Maximum = filePaths.Length;
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Step = 1;
-            foreach (var one in filePaths)
-            {
-                // TODO 使用协程池
-                var res = handleImageEntry(one);
-                if (res == false)
-                {
-                    Debug.WriteLine("processing failed", one);
-                }
-                toolStripProgressBar.PerformStep();
-            }
 
-            buttonFont.Enabled = true;
-            numericQuality.Enabled = true;
-            buttonStart.Enabled = true;
-
-            Debug.WriteLine("processing end");
+            bgWorker.RunWorkerAsync(filePaths.Length);
         }
 
         private void buttonAbout_Click(object sender, EventArgs e)
@@ -108,12 +109,65 @@ namespace monkey_image
             }
         }
 
+        private void bgWorker_DoWork(object? sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker worker = sender as BackgroundWorker;
+
+            Debug.WriteLine("bgWorker_DoWork");
+            e.Result = handleImages(worker, e);
+        }
+
+        private void bgWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
+        {
+            toolStripProgressBar.PerformStep();
+            Debug.WriteLine("bgWorker_ProgressChanged");
+        }
+
+        private void bgWorker_Completed(object? sender, RunWorkerCompletedEventArgs e)
+        {
+            Debug.WriteLine("bgWorker_Completed");
+
+            textBoxDir.Enabled = true;
+            buttonOpen.Enabled = true;
+            groupBoxText.Enabled = true;
+            groupBoxGraph.Enabled = true;
+            groupBoxFont.Enabled = true;
+            buttonAbout.Enabled = true;
+            buttonStart.Enabled = true;
+
+            Debug.WriteLine("processing end: "+e.Result);
+        }
+
+        private bool handleImages(BackgroundWorker worker, DoWorkEventArgs e)
+        {
+            bool ok = true;
+            int n = 0;
+
+            if (filePaths == null || filePaths.Length == 0 )
+            {
+                return false;
+            }
+
+            foreach (var one in filePaths)
+            {
+                var res = handleImageEntry(one);
+                if (res == false)
+                {
+                    ok = false;
+                    Debug.WriteLine("processing failed", one);
+                }
+                n++;
+                worker.ReportProgress(n);
+            }
+
+            return ok;
+        }
 
         // 处理图片入口
         private bool handleImageEntry(string file)
         {
             var ext = Path.GetExtension(file).ToLower();
-            if (typeMap.ContainsKey(ext))
+            if (typeMap != null && typeMap.ContainsKey(ext))
             {
                 var h = typeMap[ext];
                 if (h != null)
@@ -139,7 +193,7 @@ namespace monkey_image
             using Bitmap inputBitMap = inputImage.ToBitmap(ImageFormat.Jpeg);
 
             // 绘制文字
-            if (useDrawText())
+            if (needDrawText)
             {
                 PropertyItem? prop;
                 prop = getPropertyItem(inputBitMap, ExifDTOriginalId);
@@ -149,7 +203,7 @@ namespace monkey_image
                     Debug.WriteLine("{0} datetime: {1}", file, datetime);
                     datetime = datetime.Split(' ')[0].Replace(':', '/');
                 }
-                var text = getFrontCaption() + datetime + getBackCaption();
+                var text = frontText + datetime + backText;
                 Debug.WriteLine("{0} text: {1}", file, text);
 
                 // 获取图像宽度和高度
@@ -177,12 +231,12 @@ namespace monkey_image
             ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
             System.Drawing.Imaging.Encoder encoder = System.Drawing.Imaging.Encoder.Quality;
             EncoderParameters enParams = new EncoderParameters(1);
-            EncoderParameter enParam = new EncoderParameter(encoder, getQuality());
+            EncoderParameter enParam = new EncoderParameter(encoder, quality);
             enParams.Param[0] = enParam;
 
             // 保存修改后的图像到磁盘
             string outputFile = string.Format("Output_{0}_{1}.{2}",
-                (int)getCornType(), Path.GetFileNameWithoutExtension(file), "jpg");
+                (int)cornType, Path.GetFileNameWithoutExtension(file), "jpg");
             string outputPath = Path.Combine(Path.GetDirectoryName(file), outputFile);
             inputBitMap.Save(outputPath, jpgEncoder, enParams);
 
@@ -190,45 +244,9 @@ namespace monkey_image
             return true;
         }
 
-        // 获取前段内容
-        private string getFrontCaption()
+        private PropertyItem? getPropertyItem(Bitmap b, int id)
         {
-            return textBoxFront.Text;
-        }
-
-        // 获取后段内容
-        private string getBackCaption()
-        {
-            return textBoxBack.Text;
-        }
-
-        // 获取文本放置角落
-        private CornType getCornType()
-        {
-            return (CornType)comboBoxCorner.SelectedIndex;
-        }
-
-        // 获取转换质量
-        private int getQuality()
-        {
-            var def = 80;
-            var q = ((int)numericQuality.Value);
-            if (q >= numericQuality.Minimum && q <= numericQuality.Maximum)
-            {
-                return q;
-            }
-            return def;
-        }
-
-        // 是否绘制文本
-        private bool useDrawText()
-        {
-            return checkBoxDrawText.Checked;
-        }
-
-        private System.Drawing.Imaging.PropertyItem? getPropertyItem(Bitmap b, int id)
-        {
-            System.Drawing.Imaging.PropertyItem? prop;
+            PropertyItem? prop;
             try
             {
                 prop = b.GetPropertyItem(id);
@@ -257,11 +275,11 @@ namespace monkey_image
         // 计算子元素的坐标
         private Point calcCoordinate(int width, int height, int childWidth, int childHeight)
         {
+            int x;
+            int y;
             Point p = new Point();
-            int x = 0;
-            int y = 0;
 
-            switch (getCornType())
+            switch (cornType)
             {
                 case CornType.TopLeft:
                     x = width * 1 / 24;
@@ -304,10 +322,37 @@ namespace monkey_image
             return p;
         }
 
+        private void readSetting()
+        {
+            frontText = textBoxFront.Text;
+            backText = textBoxBack.Text;
+            cornType = (CornType)comboBoxCorner.SelectedIndex;
+            quality = (int)numericQuality.Value;
+            needDrawText = checkBoxDrawText.Checked;
+            if (quality < numericQuality.Minimum || quality > numericQuality.Maximum)
+            {
+                quality = 80; //default
+            }
+        }
+
         private string[]? filePaths;
         private Dictionary<string, HandleImage>? typeMap;
         private Font font;
 
+        /// <summary> 前段文本 </summary>
+        private string frontText;
+
+        /// <summary> 后段文本 </summary>
+        private string backText;
+
+        /// <summary> 角落类型 </summary>
+        private CornType cornType;
+
+        /// <summary> 转换质量 </summary>
+        private int quality;
+
+        /// <summary> 是否绘制文本 </summary>
+        private bool needDrawText;
 
     }
     delegate bool HandleImage(string file);
