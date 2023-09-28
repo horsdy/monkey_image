@@ -29,274 +29,316 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
-            textBoxDir = new TextBox();
-            buttonOpen = new Button();
-            groupBoxText = new GroupBox();
-            textBoxBack = new TextBox();
-            textBoxMid = new TextBox();
-            textBoxFront = new TextBox();
-            groupBoxGraph = new GroupBox();
-            checkBoxDrawText = new CheckBox();
-            numericQuality = new NumericUpDown();
-            labelQuality = new Label();
-            checkBoxJpg = new CheckBox();
-            comboBoxCorner = new ComboBox();
-            labelCorner = new Label();
-            buttonFont = new Button();
-            textBoxFont = new TextBox();
-            groupBoxFont = new GroupBox();
-            statusStripBottom = new StatusStrip();
-            toolStripProgressBar = new ToolStripProgressBar();
-            buttonStart = new Button();
-            openFileDialog = new OpenFileDialog();
-            fontDialog = new FontDialog();
-            buttonAbout = new Button();
-            bgWorker = new System.ComponentModel.BackgroundWorker();
-            groupBoxText.SuspendLayout();
-            groupBoxGraph.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericQuality).BeginInit();
-            groupBoxFont.SuspendLayout();
-            statusStripBottom.SuspendLayout();
-            SuspendLayout();
+            this.textBoxDir = new System.Windows.Forms.TextBox();
+            this.buttonOpen = new System.Windows.Forms.Button();
+            this.groupBoxText = new System.Windows.Forms.GroupBox();
+            this.textBoxBack = new System.Windows.Forms.TextBox();
+            this.textBoxMid = new System.Windows.Forms.TextBox();
+            this.textBoxFront = new System.Windows.Forms.TextBox();
+            this.groupBoxGraph = new System.Windows.Forms.GroupBox();
+            this.checkBoxDrawText = new System.Windows.Forms.CheckBox();
+            this.numericQuality = new System.Windows.Forms.NumericUpDown();
+            this.labelQuality = new System.Windows.Forms.Label();
+            this.checkBoxJpg = new System.Windows.Forms.CheckBox();
+            this.comboBoxCorner = new System.Windows.Forms.ComboBox();
+            this.labelCorner = new System.Windows.Forms.Label();
+            this.buttonFont = new System.Windows.Forms.Button();
+            this.textBoxFont = new System.Windows.Forms.TextBox();
+            this.groupBoxFont = new System.Windows.Forms.GroupBox();
+            this.statusStripBottom = new System.Windows.Forms.StatusStrip();
+            this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.buttonStart = new System.Windows.Forms.Button();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.fontDialog = new System.Windows.Forms.FontDialog();
+            this.buttonAbout = new System.Windows.Forms.Button();
+            this.bgWorker = new System.ComponentModel.BackgroundWorker();
+            this.groupBoxText.SuspendLayout();
+            this.groupBoxGraph.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericQuality)).BeginInit();
+            this.groupBoxFont.SuspendLayout();
+            this.statusStripBottom.SuspendLayout();
+            this.SuspendLayout();
             // 
             // textBoxDir
             // 
-            textBoxDir.Location = new Point(12, 12);
-            textBoxDir.Name = "textBoxDir";
-            textBoxDir.Size = new Size(393, 27);
-            textBoxDir.TabIndex = 0;
+            this.textBoxDir.Location = new System.Drawing.Point(10, 10);
+            this.textBoxDir.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxDir.Name = "textBoxDir";
+            this.textBoxDir.Size = new System.Drawing.Size(315, 23);
+            this.textBoxDir.TabIndex = 0;
             // 
             // buttonOpen
             // 
-            buttonOpen.Location = new Point(411, 12);
-            buttonOpen.Name = "buttonOpen";
-            buttonOpen.Size = new Size(75, 27);
-            buttonOpen.TabIndex = 1;
-            buttonOpen.Text = "打开";
-            buttonOpen.UseVisualStyleBackColor = true;
-            buttonOpen.Click += buttonOpen_Click;
+            this.buttonOpen.Location = new System.Drawing.Point(329, 10);
+            this.buttonOpen.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonOpen.Name = "buttonOpen";
+            this.buttonOpen.Size = new System.Drawing.Size(60, 22);
+            this.buttonOpen.TabIndex = 1;
+            this.buttonOpen.Text = "打开";
+            this.buttonOpen.UseVisualStyleBackColor = true;
+            this.buttonOpen.Click += new System.EventHandler(this.buttonOpen_Click);
             // 
             // groupBoxText
             // 
-            groupBoxText.Controls.Add(textBoxBack);
-            groupBoxText.Controls.Add(textBoxMid);
-            groupBoxText.Controls.Add(textBoxFront);
-            groupBoxText.Location = new Point(13, 42);
-            groupBoxText.Name = "groupBoxText";
-            groupBoxText.Size = new Size(473, 62);
-            groupBoxText.TabIndex = 2;
-            groupBoxText.TabStop = false;
-            groupBoxText.Text = "文本";
+            this.groupBoxText.Controls.Add(this.textBoxBack);
+            this.groupBoxText.Controls.Add(this.textBoxMid);
+            this.groupBoxText.Controls.Add(this.textBoxFront);
+            this.groupBoxText.Location = new System.Drawing.Point(10, 34);
+            this.groupBoxText.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBoxText.Name = "groupBoxText";
+            this.groupBoxText.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBoxText.Size = new System.Drawing.Size(378, 50);
+            this.groupBoxText.TabIndex = 2;
+            this.groupBoxText.TabStop = false;
+            this.groupBoxText.Text = "文本";
             // 
             // textBoxBack
             // 
-            textBoxBack.Location = new Point(315, 23);
-            textBoxBack.Name = "textBoxBack";
-            textBoxBack.Size = new Size(151, 27);
-            textBoxBack.TabIndex = 2;
+            this.textBoxBack.Location = new System.Drawing.Point(252, 18);
+            this.textBoxBack.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxBack.Name = "textBoxBack";
+            this.textBoxBack.Size = new System.Drawing.Size(122, 23);
+            this.textBoxBack.TabIndex = 2;
             // 
             // textBoxMid
             // 
-            textBoxMid.Location = new Point(161, 23);
-            textBoxMid.Name = "textBoxMid";
-            textBoxMid.ReadOnly = true;
-            textBoxMid.Size = new Size(143, 27);
-            textBoxMid.TabIndex = 1;
-            textBoxMid.Text = "日期";
-            textBoxMid.TextAlign = HorizontalAlignment.Center;
+            this.textBoxMid.Location = new System.Drawing.Point(129, 18);
+            this.textBoxMid.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxMid.Name = "textBoxMid";
+            this.textBoxMid.ReadOnly = true;
+            this.textBoxMid.Size = new System.Drawing.Size(115, 23);
+            this.textBoxMid.TabIndex = 1;
+            this.textBoxMid.Text = "日期";
+            this.textBoxMid.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBoxFront
             // 
-            textBoxFront.Location = new Point(7, 23);
-            textBoxFront.Name = "textBoxFront";
-            textBoxFront.Size = new Size(143, 27);
-            textBoxFront.TabIndex = 0;
+            this.textBoxFront.Location = new System.Drawing.Point(6, 18);
+            this.textBoxFront.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxFront.Name = "textBoxFront";
+            this.textBoxFront.Size = new System.Drawing.Size(115, 23);
+            this.textBoxFront.TabIndex = 0;
             // 
             // groupBoxGraph
             // 
-            groupBoxGraph.Controls.Add(checkBoxDrawText);
-            groupBoxGraph.Controls.Add(numericQuality);
-            groupBoxGraph.Controls.Add(labelQuality);
-            groupBoxGraph.Controls.Add(checkBoxJpg);
-            groupBoxGraph.Controls.Add(comboBoxCorner);
-            groupBoxGraph.Controls.Add(labelCorner);
-            groupBoxGraph.Location = new Point(13, 111);
-            groupBoxGraph.Name = "groupBoxGraph";
-            groupBoxGraph.Size = new Size(226, 138);
-            groupBoxGraph.TabIndex = 3;
-            groupBoxGraph.TabStop = false;
-            groupBoxGraph.Text = "图像";
+            this.groupBoxGraph.Controls.Add(this.checkBoxDrawText);
+            this.groupBoxGraph.Controls.Add(this.numericQuality);
+            this.groupBoxGraph.Controls.Add(this.labelQuality);
+            this.groupBoxGraph.Controls.Add(this.checkBoxJpg);
+            this.groupBoxGraph.Controls.Add(this.comboBoxCorner);
+            this.groupBoxGraph.Controls.Add(this.labelCorner);
+            this.groupBoxGraph.Location = new System.Drawing.Point(10, 89);
+            this.groupBoxGraph.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBoxGraph.Name = "groupBoxGraph";
+            this.groupBoxGraph.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBoxGraph.Size = new System.Drawing.Size(181, 110);
+            this.groupBoxGraph.TabIndex = 3;
+            this.groupBoxGraph.TabStop = false;
+            this.groupBoxGraph.Text = "图像";
             // 
             // checkBoxDrawText
             // 
-            checkBoxDrawText.AutoSize = true;
-            checkBoxDrawText.Checked = true;
-            checkBoxDrawText.CheckState = CheckState.Checked;
-            checkBoxDrawText.Location = new Point(98, 97);
-            checkBoxDrawText.Name = "checkBoxDrawText";
-            checkBoxDrawText.Size = new Size(91, 24);
-            checkBoxDrawText.TabIndex = 4;
-            checkBoxDrawText.Text = "绘制文本";
-            checkBoxDrawText.UseVisualStyleBackColor = true;
+            this.checkBoxDrawText.AutoSize = true;
+            this.checkBoxDrawText.Checked = true;
+            this.checkBoxDrawText.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxDrawText.Location = new System.Drawing.Point(78, 78);
+            this.checkBoxDrawText.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBoxDrawText.Name = "checkBoxDrawText";
+            this.checkBoxDrawText.Size = new System.Drawing.Size(75, 21);
+            this.checkBoxDrawText.TabIndex = 4;
+            this.checkBoxDrawText.Text = "绘制文本";
+            this.checkBoxDrawText.UseVisualStyleBackColor = true;
             // 
             // numericQuality
             // 
-            numericQuality.Increment = new decimal(new int[] { 5, 0, 0, 0 });
-            numericQuality.Location = new Point(52, 64);
-            numericQuality.Minimum = new decimal(new int[] { 10, 0, 0, 0 });
-            numericQuality.Name = "numericQuality";
-            numericQuality.Size = new Size(100, 27);
-            numericQuality.TabIndex = 3;
-            numericQuality.Value = new decimal(new int[] { 80, 0, 0, 0 });
+            this.numericQuality.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericQuality.Location = new System.Drawing.Point(42, 51);
+            this.numericQuality.Margin = new System.Windows.Forms.Padding(2);
+            this.numericQuality.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericQuality.Name = "numericQuality";
+            this.numericQuality.Size = new System.Drawing.Size(80, 23);
+            this.numericQuality.TabIndex = 3;
+            this.numericQuality.Value = new decimal(new int[] {
+            80,
+            0,
+            0,
+            0});
             // 
             // labelQuality
             // 
-            labelQuality.AutoSize = true;
-            labelQuality.Location = new Point(7, 66);
-            labelQuality.Name = "labelQuality";
-            labelQuality.Size = new Size(43, 20);
-            labelQuality.TabIndex = 2;
-            labelQuality.Text = "质量:";
+            this.labelQuality.AutoSize = true;
+            this.labelQuality.Location = new System.Drawing.Point(6, 53);
+            this.labelQuality.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelQuality.Name = "labelQuality";
+            this.labelQuality.Size = new System.Drawing.Size(35, 17);
+            this.labelQuality.TabIndex = 2;
+            this.labelQuality.Text = "质量:";
             // 
             // checkBoxJpg
             // 
-            checkBoxJpg.AutoSize = true;
-            checkBoxJpg.Checked = true;
-            checkBoxJpg.CheckState = CheckState.Checked;
-            checkBoxJpg.Enabled = false;
-            checkBoxJpg.Location = new Point(7, 97);
-            checkBoxJpg.Name = "checkBoxJpg";
-            checkBoxJpg.Size = new Size(85, 24);
-            checkBoxJpg.TabIndex = 0;
-            checkBoxJpg.Text = "转为jpg";
-            checkBoxJpg.UseVisualStyleBackColor = true;
+            this.checkBoxJpg.AutoSize = true;
+            this.checkBoxJpg.Checked = true;
+            this.checkBoxJpg.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxJpg.Enabled = false;
+            this.checkBoxJpg.Location = new System.Drawing.Point(6, 78);
+            this.checkBoxJpg.Margin = new System.Windows.Forms.Padding(2);
+            this.checkBoxJpg.Name = "checkBoxJpg";
+            this.checkBoxJpg.Size = new System.Drawing.Size(70, 21);
+            this.checkBoxJpg.TabIndex = 0;
+            this.checkBoxJpg.Text = "转为jpg";
+            this.checkBoxJpg.UseVisualStyleBackColor = true;
             // 
             // comboBoxCorner
             // 
-            comboBoxCorner.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBoxCorner.FormattingEnabled = true;
-            comboBoxCorner.Items.AddRange(new object[] { "顶部左边", "顶部中间", "顶部右边", "底部左边", "底部中间", "底部右边" });
-            comboBoxCorner.Location = new Point(52, 25);
-            comboBoxCorner.Name = "comboBoxCorner";
-            comboBoxCorner.Size = new Size(100, 28);
-            comboBoxCorner.TabIndex = 1;
+            this.comboBoxCorner.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCorner.FormattingEnabled = true;
+            this.comboBoxCorner.Items.AddRange(new object[] {
+            "顶部左边",
+            "顶部中间",
+            "顶部右边",
+            "底部左边",
+            "底部中间",
+            "底部右边"});
+            this.comboBoxCorner.Location = new System.Drawing.Point(42, 20);
+            this.comboBoxCorner.Margin = new System.Windows.Forms.Padding(2);
+            this.comboBoxCorner.Name = "comboBoxCorner";
+            this.comboBoxCorner.Size = new System.Drawing.Size(81, 25);
+            this.comboBoxCorner.TabIndex = 1;
             // 
             // labelCorner
             // 
-            labelCorner.AutoSize = true;
-            labelCorner.Location = new Point(7, 31);
-            labelCorner.Name = "labelCorner";
-            labelCorner.Size = new Size(47, 20);
-            labelCorner.TabIndex = 0;
-            labelCorner.Text = "方位 :";
+            this.labelCorner.AutoSize = true;
+            this.labelCorner.Location = new System.Drawing.Point(6, 25);
+            this.labelCorner.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelCorner.Name = "labelCorner";
+            this.labelCorner.Size = new System.Drawing.Size(39, 17);
+            this.labelCorner.TabIndex = 0;
+            this.labelCorner.Text = "方位 :";
             // 
             // buttonFont
             // 
-            buttonFont.Location = new Point(15, 25);
-            buttonFont.Name = "buttonFont";
-            buttonFont.Size = new Size(85, 28);
-            buttonFont.TabIndex = 6;
-            buttonFont.Text = "选择字体";
-            buttonFont.UseVisualStyleBackColor = true;
-            buttonFont.Click += buttonFont_Click;
+            this.buttonFont.Location = new System.Drawing.Point(12, 20);
+            this.buttonFont.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonFont.Name = "buttonFont";
+            this.buttonFont.Size = new System.Drawing.Size(68, 24);
+            this.buttonFont.TabIndex = 6;
+            this.buttonFont.Text = "选择字体";
+            this.buttonFont.UseVisualStyleBackColor = true;
+            this.buttonFont.Click += new System.EventHandler(this.buttonFont_Click);
             // 
             // textBoxFont
             // 
-            textBoxFont.Location = new Point(15, 66);
-            textBoxFont.Multiline = true;
-            textBoxFont.Name = "textBoxFont";
-            textBoxFont.ReadOnly = true;
-            textBoxFont.Size = new Size(216, 63);
-            textBoxFont.TabIndex = 7;
+            this.textBoxFont.Location = new System.Drawing.Point(12, 53);
+            this.textBoxFont.Margin = new System.Windows.Forms.Padding(2);
+            this.textBoxFont.Multiline = true;
+            this.textBoxFont.Name = "textBoxFont";
+            this.textBoxFont.ReadOnly = true;
+            this.textBoxFont.Size = new System.Drawing.Size(174, 51);
+            this.textBoxFont.TabIndex = 7;
             // 
             // groupBoxFont
             // 
-            groupBoxFont.Controls.Add(buttonFont);
-            groupBoxFont.Controls.Add(textBoxFont);
-            groupBoxFont.Location = new Point(245, 111);
-            groupBoxFont.Name = "groupBoxFont";
-            groupBoxFont.Size = new Size(241, 138);
-            groupBoxFont.TabIndex = 8;
-            groupBoxFont.TabStop = false;
-            groupBoxFont.Text = "字体";
+            this.groupBoxFont.Controls.Add(this.buttonFont);
+            this.groupBoxFont.Controls.Add(this.textBoxFont);
+            this.groupBoxFont.Location = new System.Drawing.Point(196, 89);
+            this.groupBoxFont.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBoxFont.Name = "groupBoxFont";
+            this.groupBoxFont.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBoxFont.Size = new System.Drawing.Size(193, 110);
+            this.groupBoxFont.TabIndex = 8;
+            this.groupBoxFont.TabStop = false;
+            this.groupBoxFont.Text = "字体";
             // 
             // statusStripBottom
             // 
-            statusStripBottom.ImageScalingSize = new Size(20, 20);
-            statusStripBottom.Items.AddRange(new ToolStripItem[] { toolStripProgressBar });
-            statusStripBottom.Location = new Point(0, 305);
-            statusStripBottom.Name = "statusStripBottom";
-            statusStripBottom.Size = new Size(498, 24);
-            statusStripBottom.SizingGrip = false;
-            statusStripBottom.TabIndex = 10;
-            statusStripBottom.Text = "statusStrip";
+            this.statusStripBottom.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStripBottom.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripProgressBar});
+            this.statusStripBottom.Location = new System.Drawing.Point(0, 241);
+            this.statusStripBottom.Name = "statusStripBottom";
+            this.statusStripBottom.Padding = new System.Windows.Forms.Padding(1, 0, 11, 0);
+            this.statusStripBottom.Size = new System.Drawing.Size(398, 22);
+            this.statusStripBottom.SizingGrip = false;
+            this.statusStripBottom.TabIndex = 10;
+            this.statusStripBottom.Text = "statusStrip";
             // 
             // toolStripProgressBar
             // 
-            toolStripProgressBar.Name = "toolStripProgressBar";
-            toolStripProgressBar.Size = new Size(494, 16);
+            this.toolStripProgressBar.Name = "toolStripProgressBar";
+            this.toolStripProgressBar.Size = new System.Drawing.Size(395, 16);
             // 
             // buttonStart
             // 
-            buttonStart.Location = new Point(411, 267);
-            buttonStart.Name = "buttonStart";
-            buttonStart.Size = new Size(75, 35);
-            buttonStart.TabIndex = 11;
-            buttonStart.Text = "开始";
-            buttonStart.UseVisualStyleBackColor = true;
-            buttonStart.Click += buttonStart_Click;
+            this.buttonStart.Location = new System.Drawing.Point(329, 214);
+            this.buttonStart.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonStart.Name = "buttonStart";
+            this.buttonStart.Size = new System.Drawing.Size(60, 28);
+            this.buttonStart.TabIndex = 11;
+            this.buttonStart.Text = "开始";
+            this.buttonStart.UseVisualStyleBackColor = true;
+            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
             // 
             // openFileDialog
             // 
-            openFileDialog.Filter = "图片|*.heic;*.jpg;*.jpeg;*.png;";
-            openFileDialog.Multiselect = true;
+            this.openFileDialog.Filter = "图片|*.heic;*.jpg;*.jpeg;*.png;";
+            this.openFileDialog.Multiselect = true;
             // 
             // buttonAbout
             // 
-            buttonAbout.Location = new Point(13, 267);
-            buttonAbout.Name = "buttonAbout";
-            buttonAbout.Size = new Size(50, 35);
-            buttonAbout.TabIndex = 12;
-            buttonAbout.Text = "关于";
-            buttonAbout.UseVisualStyleBackColor = true;
-            buttonAbout.Click += buttonAbout_Click;
+            this.buttonAbout.Location = new System.Drawing.Point(10, 214);
+            this.buttonAbout.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonAbout.Name = "buttonAbout";
+            this.buttonAbout.Size = new System.Drawing.Size(40, 28);
+            this.buttonAbout.TabIndex = 12;
+            this.buttonAbout.Text = "关于";
+            this.buttonAbout.UseVisualStyleBackColor = true;
+            this.buttonAbout.Click += new System.EventHandler(this.buttonAbout_Click);
             // 
             // bgWorker
             // 
-            bgWorker.WorkerReportsProgress = true;
+            this.bgWorker.WorkerReportsProgress = true;
             // 
             // FormMain
             // 
-            AutoScaleDimensions = new SizeF(120F, 120F);
-            AutoScaleMode = AutoScaleMode.Dpi;
-            ClientSize = new Size(498, 329);
-            Controls.Add(buttonAbout);
-            Controls.Add(buttonStart);
-            Controls.Add(statusStripBottom);
-            Controls.Add(groupBoxFont);
-            Controls.Add(groupBoxGraph);
-            Controls.Add(groupBoxText);
-            Controls.Add(buttonOpen);
-            Controls.Add(textBoxDir);
-            Font = new Font("微软雅黑", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            FormBorderStyle = FormBorderStyle.Fixed3D;
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            Margin = new Padding(3, 4, 3, 4);
-            MaximizeBox = false;
-            Name = "FormMain";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "MonkeyImage v1.0";
-            groupBoxText.ResumeLayout(false);
-            groupBoxText.PerformLayout();
-            groupBoxGraph.ResumeLayout(false);
-            groupBoxGraph.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericQuality).EndInit();
-            groupBoxFont.ResumeLayout(false);
-            groupBoxFont.PerformLayout();
-            statusStripBottom.ResumeLayout(false);
-            statusStripBottom.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(398, 263);
+            this.Controls.Add(this.buttonAbout);
+            this.Controls.Add(this.buttonStart);
+            this.Controls.Add(this.statusStripBottom);
+            this.Controls.Add(this.groupBoxFont);
+            this.Controls.Add(this.groupBoxGraph);
+            this.Controls.Add(this.groupBoxText);
+            this.Controls.Add(this.buttonOpen);
+            this.Controls.Add(this.textBoxDir);
+            this.Font = new System.Drawing.Font("微软雅黑", 9F);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.MaximizeBox = false;
+            this.Name = "FormMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "MonkeyImage v1.0";
+            this.groupBoxText.ResumeLayout(false);
+            this.groupBoxText.PerformLayout();
+            this.groupBoxGraph.ResumeLayout(false);
+            this.groupBoxGraph.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericQuality)).EndInit();
+            this.groupBoxFont.ResumeLayout(false);
+            this.groupBoxFont.PerformLayout();
+            this.statusStripBottom.ResumeLayout(false);
+            this.statusStripBottom.PerformLayout();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
