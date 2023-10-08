@@ -3,7 +3,7 @@
   <PropertyGroup>
 	<LangVersion>10.0</LangVersion>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net462</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -13,6 +13,7 @@
     <Description>在图片上绘制原始日期</Description>
     <Copyright>Copyright(C) 2023 houshidi@sina.com</Copyright>
     <Authors>$(Authors)</Authors>
+    <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="13.3.0" />
+    <PackageReference Include="Magick.NET-Q8-x86" Version="13.3.0" />
     <PackageReference Include="Magick.NET.Core" Version="13.3.0" />
     <PackageReference Include="Magick.NET.SystemDrawing" Version="7.1.0" />
   </ItemGroup>

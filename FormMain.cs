@@ -15,6 +15,7 @@ namespace monkey_image
             SetDefaultAttrComponent();
             InitializeBackgroundWorker();
             InitializeTypeMap();
+            Log.WriteLine("MonkeyImage Start");
         }
 
         public enum CornType
@@ -73,7 +74,8 @@ namespace monkey_image
             {
                 return;
             }
-            Debug.WriteLine("processing start");
+            Debug.WriteLine("processing start, num:{0}", filePaths.Length);
+            Log.WriteLine("processing start, num:{0}", filePaths.Length);
 
             readSetting();
 
@@ -120,7 +122,10 @@ namespace monkey_image
         private void bgWorker_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
             toolStripProgressBar.PerformStep();
-            Debug.WriteLine("bgWorker_ProgressChanged");
+            int value = toolStripProgressBar.Value;
+            int max = toolStripProgressBar.Maximum;
+            Debug.WriteLine("bgWorker_ProgressChanged, progress:{0}/{1}", value, max);
+            Log.WriteLine("bgWorker_ProgressChanged, progress:{0}/{1}", value, max);
         }
 
         private void bgWorker_Completed(object? sender, RunWorkerCompletedEventArgs e)
@@ -136,6 +141,7 @@ namespace monkey_image
             buttonStart.Enabled = true;
 
             Debug.WriteLine("processing end: "+e.Result);
+            Log.WriteLine("processing end: " + e.Result);
         }
 
         private bool handleImages(BackgroundWorker worker, DoWorkEventArgs e)
@@ -187,6 +193,7 @@ namespace monkey_image
             if (inputImage == null)
             {
                 Debug.WriteLine("open file failed:" + file);
+                Log.WriteLine("open file failed:" + file);
                 return false;
             }
 
