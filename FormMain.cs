@@ -4,6 +4,7 @@ using ImageMagick;
 using System.Diagnostics;
 using System.Drawing.Imaging;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace monkey_image
 {
@@ -28,7 +29,7 @@ namespace monkey_image
             BottomRight     //底部右边
         }
 
-        private string version = "v1.1.0";
+        private string version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         public const int ExifDTOriginalId = 0x9003; // 拍摄时间
         public const int ExifOrientationId = 0x0112;// 方位
 

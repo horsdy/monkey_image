@@ -12,8 +12,10 @@
     <Title>MonkeyImage</Title>
     <Description>在图片上绘制原始日期</Description>
     <Copyright>Copyright(C) 2023 houshidi@sina.com</Copyright>
-    <Authors>$(Authors)</Authors>
+    <Authors>houshidi</Authors>
     <Platforms>AnyCPU;x86</Platforms>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
