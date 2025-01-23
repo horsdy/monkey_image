@@ -211,11 +211,11 @@ namespace monkey_image
                 if (tvNum > 0) {
                     //exif.SetValue(ExifTag.Orientation, (UInt16)1);
                     //inputImage.SetProfile(exif);
-                    switch (tvNum) {
-                        case 6:
-                            inputImage.Orientation = OrientationType.RightTop;
-                            break;
-                    }
+                    //switch (tvNum) {
+                    //    case 6:
+                    //        inputImage.Orientation = OrientationType.RightTop;
+                    //        break;
+                    //}
                     
                     inputImage.AutoOrient();
                 }
