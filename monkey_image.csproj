@@ -15,7 +15,7 @@
     <Authors>houshidi</Authors>
     <Platforms>AnyCPU;x86</Platforms>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
