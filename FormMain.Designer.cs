@@ -326,7 +326,7 @@
             this.MaximizeBox = false;
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "MonkeyImage v1.0";
+            this.Text = "MonkeyImage " + version;
             this.groupBoxText.ResumeLayout(false);
             this.groupBoxText.PerformLayout();
             this.groupBoxGraph.ResumeLayout(false);
