@@ -28,7 +28,9 @@ namespace monkey_image
             BottomRight     //底部右边
         }
 
-        public const int ExifDTOriginalId = 0x9003;
+        private string version = "v1.1.0";
+        public const int ExifDTOriginalId = 0x9003; // 拍摄时间
+        public const int ExifOrientationId = 0x0112;// 方位
 
         // 设置组件的默认属性
         private void SetDefaultAttrComponent()
@@ -98,7 +100,7 @@ namespace monkey_image
         private void buttonAbout_Click(object sender, EventArgs e)
         {
             string appProper = string.Format("Monkey Image\nVersion: {0}\nAuthor: {1}",
-                "v1.0.0", "houshidi@sina.com");
+                version, "houshidi@sina.com");
             MessageBox.Show(appProper, "关于");
         }
 
@@ -196,17 +198,37 @@ namespace monkey_image
                 Log.WriteLine("open file failed:" + file);
                 return false;
             }
+            var exif = inputImage.GetExifProfile();
+            if (exif != null)
+            {
+                var tag = exif.GetValue(ExifTag.Orientation);
+                var tagValue = tag.GetValue();
+                var tvNum = (UInt16)tagValue;
+                Debug.WriteLine("get ExifTag.Orientation:{0}", tvNum);
+
+                // 设为不旋转
+                if (tvNum > 0) {
+                    //exif.SetValue(ExifTag.Orientation, (UInt16)1);
+                    //inputImage.SetProfile(exif);
+                    switch (tvNum) {
+                        case 6:
+                            inputImage.Orientation = OrientationType.RightTop;
+                            break;
+                    }
+                    
+                    inputImage.AutoOrient();
+                }
+            }
 
             using Bitmap inputBitMap = inputImage.ToBitmap(ImageFormat.Jpeg);
 
             // 绘制文字
             if (needDrawText)
             {
-                PropertyItem? prop;
-                prop = getPropertyItem(inputBitMap, ExifDTOriginalId);
-                if (prop != null && prop.Value != null)
+                if (exif != null)
                 {
-                    datetime = Encoding.Default.GetString(prop.Value).Trim('\0');
+                    var tagValue = exif.GetValue(ExifTag.DateTimeOriginal).GetValue();
+                    datetime = tagValue.ToString();
                     Debug.WriteLine("{0} datetime: {1}", file, datetime);
                     datetime = datetime.Split(' ')[0].Replace(':', '/');
                 }
